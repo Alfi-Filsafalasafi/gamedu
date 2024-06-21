@@ -165,9 +165,9 @@
                                             <label for="angkatan"
                                                 class="col-md-4 col-lg-3 col-form-label">Angkatan</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="angkatan" type="text" class="form-control"
-                                                    id="angkatan" value="{{ old('angkatan') ?? auth()->user()->prodi }}"
-                                                    required>
+                                                <input name="angkatan" type="number" class="form-control"
+                                                    id="angkatan" min="2017" max="2027"
+                                                    value="{{ old('angkatan') ?? auth()->user()->angkatan }}" required>
                                             </div>
                                         </div>
                                     @endif

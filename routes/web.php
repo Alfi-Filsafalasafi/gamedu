@@ -10,6 +10,7 @@ use App\Http\Controllers\Dosen\HomeDosenController;
 use App\Http\Controllers\Dosen\BabDosenController;
 use App\Http\Controllers\Dosen\QuizDosenController;
 use App\Http\Controllers\Dosen\SubBabDosenController;
+use App\Http\Controllers\Dosen\SubQuizDosenController;
 
 use App\Http\Controllers\Admin\HomeAdminController;
 use App\Http\Controllers\Admin\UserAdminController;
@@ -76,6 +77,16 @@ Route::middleware(['role:dosen'])->group(function () {
             Route::get('/edit/{id}', [QuizDosenController::class, 'edit'])->name('edit');
             Route::patch('/update/{id}', [QuizDosenController::class, 'update'])->name('update');
             Route::delete('/delete/{id}', [QuizDosenController::class, 'delete'])->name('delete');
+        });
+        //sub quiz
+        Route::prefix('quiz/{id_quiz}')->name('sub_quiz.')->group(function () {
+            Route::get('/', [SubQuizDosenController::class, 'index'])->name('index');
+            Route::get('/create', [SubQuizDosenController::class, 'create'])->name('create');
+            Route::get('/show/{id}', [SubQuizDosenController::class, 'show'])->name('show');
+            Route::post('/store', [SubQuizDosenController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [SubQuizDosenController::class, 'edit'])->name('edit');
+            Route::patch('/update/{id}', [SubQuizDosenController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [SubQuizDosenController::class, 'delete'])->name('delete');
         });
 
     });

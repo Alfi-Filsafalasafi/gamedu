@@ -2,23 +2,28 @@
 @section('title', 'Home Mahasiswa')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('Dashboard') }} - Mahasiswa</div>
+    <section class="section dashboard">
+        <div class="row">
 
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
+            <!-- Admin Card -->
+            <div class="col-12">
+                <div class="card info-card customers-card">
+                    <div class="card-body pt-3">
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                <i class="bi bi-trophy"></i>
                             </div>
-                        @endif
-
-                        {{ __('You are logged in!') }}
+                            <div class="ps-3">
+                                <h6 style="font-size: 18px">Semangat Anak Muda</h6>
+                                <span class="text-muted small pt-2">Setiap detik belajar membawa kita lebih dekat pada
+                                    kesuksesan. Mari tingkatkan giat belajar kita, pahami setiap konsep, dan latih
+                                    keterampilan kita. UKK adalah panggung untuk memamerkan potensi kita, dan kita siap
+                                    membuat penampilan yang tak terlupakan!</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 @endsection

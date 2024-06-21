@@ -36,12 +36,15 @@
                                         <th>Nama Materi</th>
                                         <th>Tipe</th>
                                         <th>Petunjuk Pengerjaan</th>
+                                        <th>Jumlah</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($datas as $data)
                                         <tr>
                                             <td>
+                                                <a href="{{ route('dosen.sub_quiz.index', ['id_quiz' => $data->id]) }}"
+                                                    class="btn btn-primary btn-sm"><i class="bx bx-list-ul"></i></a>
                                                 <a href="{{ route('dosen.quiz.edit', ['id' => $data->id]) }}"
                                                     class="btn btn-warning btn-sm"><i class="bx bxs-edit"></i></a>
                                                 <a href="{{ route('dosen.quiz.delete', ['id' => $data->id]) }}"
@@ -52,6 +55,7 @@
                                             <td>{{ $data->bab->nama }}</td>
                                             <td>{{ $data->type }}</td>
                                             <td>{{ $data->petunjuk_pengerjaan }}</td>
+                                            <td>{{ $data->subQuizs->count() }} soal</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

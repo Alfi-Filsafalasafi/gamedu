@@ -19,3 +19,4 @@
 
 <!-- Template Main CSS File -->
 <link href="{{ asset('NiceAdmin/assets/css/style.css') }}" rel="stylesheet" />
+@yield('style')

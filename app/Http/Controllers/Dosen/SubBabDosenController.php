@@ -67,7 +67,7 @@ class SubBabDosenController extends Controller
         }
     }
 
-    public function delete($id)
+    public function delete($id_bab, $id)
     {
         try{
             $bab = SubBab::findOrFail($id);
@@ -75,7 +75,7 @@ class SubBabDosenController extends Controller
             alert()->success('Hore!','Data berhasil dihapus');
             return back();
         }catch(\Exception $e){
-            return redirect()->route('dosen.sub_bab.index')->with('gagal', 'Terjadi kesalahan: ' . $e->getMessage() . ' Silahkan coba lagi atau hubungi admin');
+            return redirect()->route('dosen.sub_bab.index',['id_bab' => $id_bab])->with('gagal', 'Terjadi kesalahan: ' . $e->getMessage() . ' Silahkan coba lagi atau hubungi admin');
         } 
     }
 }
