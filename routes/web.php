@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 
 use App\Http\Controllers\Mahasiswa\HomeMahasiswaController;
+use App\Http\Controllers\Mahasiswa\BabMahasiswaController;
+use App\Http\Controllers\Mahasiswa\SubBabMahasiswaController;
 
 use App\Http\Controllers\Dosen\HomeDosenController;
 use App\Http\Controllers\Dosen\BabDosenController;
@@ -42,6 +44,16 @@ Route::prefix('profile')->name('profile.')->group(function(){
 Route::middleware(['role:mahasiswa'])->group(function () {
     Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
         Route::get('/', [HomeMahasiswaController::class, 'index'])->name('index');
+
+        Route::prefix('bab')->name('bab.')->group(function () {
+            Route::get('/', [BabMahasiswaController::class, 'index'])->name('index');
+            Route::post('/{id}', [BabMahasiswaController::class, 'beli'])->name('beli');
+        });
+        Route::prefix('bab/{id_bab}')->name('sub_bab.')->group(function () {
+            Route::get('/', [SubBabMahasiswaController::class, 'index'])->name('index');
+            Route::post('/{id}', [SubBabMahasiswaController::class, 'beli'])->name('beli');
+            Route::get('/baca/{id}', [SubBabMahasiswaController::class, 'baca'])->name('baca');
+        });
     });
 
 });

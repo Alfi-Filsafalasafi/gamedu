@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('babs', function (Blueprint $table) {
+        Schema::create('log_bab_users', function (Blueprint $table) {
             $table->id();
-            $table->integer('index');
-            $table->float('beli_point');
-            $table->string('nama')->nullable();
-            $table->string('durasi')->nullable();
-            $table->longText('capaian_pembelajaran')->nullable();
-            $table->longText('deskripsi')->nullable();
+            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
+            $table->foreignId('id_bab')->constrained('babs')->onDelete('cascade');
+            $table->enum('status', ['belumAda', 'progress', 'selesai'])->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bab');
+        Schema::dropIfExists('log_bab_users');
     }
 };

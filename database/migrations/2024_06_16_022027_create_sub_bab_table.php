@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_bab')->constrained('babs')->onDelete('cascade');
             $table->integer('index');
+            $table->float('beli_point');
             $table->string('nama');
             $table->longText('content')->nullable();
             $table->longText('uraian_tugas')->nullable();

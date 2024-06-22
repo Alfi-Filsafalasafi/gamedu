@@ -34,6 +34,7 @@
                                     <tr>
                                         <th width="15%"><i class="bx bx-cog"></i></th>
                                         <th>Index</th>
+                                        <th>Beli</th>
                                         <th>Nama</th>
                                         <th>Durasi</th>
                                         <th>Deskripsi</th>
@@ -54,6 +55,7 @@
                                                 </a>
                                             </td>
                                             <td>{{ $data->index }}</td>
+                                            <td>{{ $data->beli_point ?? 0 }} poin</td>
                                             <td>{{ $data->nama }}</td>
                                             <td>{{ $data->durasi }}</td>
                                             <td>{{ $data->deskripsi }}</td>

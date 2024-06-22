@@ -36,6 +36,7 @@
                                     <tr>
                                         <th width="15%"><i class="bx bx-cog"></i></th>
                                         <th>Index</th>
+                                        <th>Beli</th>
                                         <th>Nama</th>
                                         <th>Point Membaca</th>
                                         <th>Point Menonton</th>
@@ -56,9 +57,10 @@
                                                 </a>
                                             </td>
                                             <td>{{ $data->index }}</td>
+                                            <td>{{ $data->beli_point ?? 0 }} poin</td>
                                             <td>{{ $data->nama }}</td>
                                             <td>{{ $data->point_membaca }}</td>
-                                            <td>{{ $data->point_menonton_yt }}</td>
+                                            <td>{{ $data->point_menonton_yt ?? '-' }}</td>
                                             <td>{{ $data->point_tugas }}</td>
                                             <td>
                                                 <a href="{{ route('dosen.sub_bab.show', ['id_bab' => $bab->id, 'id' => $data->id]) }}"

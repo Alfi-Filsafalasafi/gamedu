@@ -1231,3 +1231,24 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+
+
+.limited-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 3em; /* Adjust based on your line-height */
+  line-height: 1.5em; /* Adjust this value to your actual line-height */
+}
+
+.limited-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 3em; /* Adjust based on your line-height */
+  line-height: 1.6em; /* Adjust this value to your actual line-height */
+}

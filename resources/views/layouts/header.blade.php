@@ -11,7 +11,12 @@
     <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
 
-
+            @if (auth()->user()->role == 'mahasiswa')
+                <li class="nav-item dropdown me-4 d-flex align-items-center">
+                    <i class="ri-money-dollar-box-fill text-success me-2" style="font-size: 24px"></i>
+                    <span>{{ auth()->user()->uang ?? 0 }}</span>
+                </li>
+            @endif
             <li class="nav-item dropdown pe-3">
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                     <img src="{{ auth()->user()->photo ? asset(auth()->user()->photo) : asset('assets/img/profile/not-profile-photo.png') }}"

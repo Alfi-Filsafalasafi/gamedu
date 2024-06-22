@@ -31,7 +31,12 @@
                                 <label for="index" class="form-label">Index</label>
                                 <input type="number" name="index" class="form-control" id="index"
                                     value="{{ old('index') }}" required>
-
+                            </div>
+                            <div class="col-md-12">
+                                <label for="beli_point" class="form-label">Beli <small class="text-warning">*point yang
+                                        diperlukan untuk mengakses materi</small></label>
+                                <input type="number" min="0" name="beli_point" class="form-control" id="beli_point"
+                                    value="{{ old('beli_point') }}" required>
                             </div>
                             <div class="col-md-12">
                                 <label for="nama" class="form-label">Nama Bab</label>

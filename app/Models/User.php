@@ -26,6 +26,7 @@ class User extends Authenticatable
         'angkatan',
         'role',
         'photo',
+        'uang',
     ];
 
     /**
@@ -46,4 +47,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function logBabUsers()
+    {
+        return $this->hasMany(LogBabUser::class, 'id_user');
+    }
+    public function logSubBabUsers() {
+        return $this->hasMany(LogSubBabUser::class, 'id_user');
+    }
 }
