@@ -2,7 +2,11 @@
 @section('title', 'Home Mahasiswa')
 @section('dashboard', 'nav-link')
 @section('materi', 'nav-link collapsed')
+@section('games', 'nav-link collapsed')
+@section('peringkat', 'nav-link collapsed')
 @section('content')
+    @include('sweetalert::alert')
+
     <section class="section dashboard">
         <div class="row">
 
@@ -99,4 +103,37 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('scripts')
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var forms = document.querySelectorAll('[id^=form-beli-materi]');
+
+            forms.forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+
+                    var status = this.getAttribute('data-status');
+
+                    if (status === 'belumAda') {
+                        swal({
+                            title: "Apakah kamu ingin membeli materi ini?",
+                            text: "Pastikan point anda cukup untuk membeli ini.",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                        }).then((willBuy) => {
+                            if (willBuy) {
+                                this.submit();
+                            }
+                        });
+                    } else {
+                        // Tidak melakukan apa-apa karena sudah menampilkan tombol "Akses Materi"
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

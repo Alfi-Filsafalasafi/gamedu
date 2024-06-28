@@ -17,3 +17,21 @@
         <span>Materi</span>
     </a>
 </li>
+
+<li class="nav-heading">Bonus</li>
+
+<li class="nav-item">
+    <a class="@yield('games')" href="">
+        <i class="bi bi-joystick"></i>
+        <span>Games</span>
+    </a>
+</li>
+
+<li class="nav-heading">Pendukung</li>
+
+<li class="nav-item">
+    <a class="@yield('peringkat')" href="">
+        <i class="bi bi-trophy"></i>
+        <span>Peringkat</span>
+    </a>
+</li>

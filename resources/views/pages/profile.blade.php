@@ -4,6 +4,11 @@
 @section('dashboard', 'nav-link')
 @section('user', 'nav-link collapsed')
 
+@section('materi', 'nav-link collapsed')
+@section('games', 'nav-link collapsed')
+@section('peringkat', 'nav-link collapsed')
+
+
 @section('content')
     <div class="pagetitle">
         <h1>Profil Saya</h1>
