@@ -304,6 +304,9 @@
                     @endif
                 </div>
             </div>
+            <div class="col-lg-4">
+                @include('layouts.partials.peringkat')
+            </div>
         </div>
     </section>
 @endsection

@@ -83,7 +83,9 @@ class BabMahasiswaController extends Controller
         $quiz_user = QuizPengumpulan::where('id_user', $id_user)->where('is_benar', 1)->count() * 10;
         $total_point_user = $membaca_user + $menonton_yt_user + $tugas_user + $quiz_user;
 
-        return view('pages.mahasiswa.bab.index', compact('datas', 'total_point', 'total_point_user'));
+        $peringkats = PeringkatController::calculateRank();
+
+        return view('pages.mahasiswa.bab.index', compact('datas', 'total_point', 'total_point_user', 'peringkats'));
     }
 
     public function beli($id){

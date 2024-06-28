@@ -29,30 +29,73 @@
         </div>
         <div class="row justify-content-between">
             <div class="col-lg-8">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="">
+                        <h4>Materi</h4>
+                        <p>Berikut adalah materi-materi yang dapat kamu pelajari, semangat dan semoga sukses</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 24px"></i>
+                        <span class=""
+                            style="font-size: 20px; white-space: nowrap;"><b>{{ $total_point_user ?? 0 }}</b>
+                            /{{ $total_point }}</span>
+                    </div>
+
+                </div>
                 <div class="row justify-content-between">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="d-flex justify-content-between">
-                                <i class="ri-lock-fill bg-danger text-white px-1 rounded" style="font-size: 20px"></i>
-                                <small class="py-1 pe-3"><b class="text-secondary">pertemuan ke 4</b></small>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title m-0 py-2" style="font-size: 18px">Default Card</h5>
-                                <p class="m-0 limited-text small">Ut in ea error laudantium quas omnis officia. Sit sed
-                                    praesentium
-                                    voluptas. Corrupti
-                                    inventore
-                                    consequatur nisi necessitatibus modi consequuntur soluta id. Enim autem est esse natus
-                                    assumenda.</p>
-                                <div class="d-flex justify-content-end mt-2 align-items-center">
-                                    <i class="ri-money-dollar-box-fill text-success me-2" style="font-size: 24px"></i>
-                                    <span class="me-4">{{ auth()->user()->uang ?? 0 }}</span>
-                                    <a href="" class="btn btn-sm btn-success">Beli Materi</a>
+                    @foreach ($datas as $data)
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    @if ($data->status == 'belumAda')
+                                        <i class="ri-lock-fill bg-danger text-white px-2 py-1 rounded"
+                                            style="font-size: 20px"></i>
+                                    @elseif($data->status == 'progress')
+                                        <i class="ri-door-open-fill bg-primary text-white px-2 py-1 rounded"
+                                            style="font-size: 20px"></i>
+                                    @elseif($data->status == 'selesai')
+                                        <i class="ri-check-double-line bg-success text-white px-2 py-1 rounded"
+                                            style="font-size: 20px"></i>
+                                    @endif
+                                    <div class="d-flex align-items-center me-3">
+                                        <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 20px"></i>
+                                        <span class=""
+                                            style="font-size: 16px"><b>{{ $data->total_point_user ?? 0 }}</b> /
+                                            {{ $data->subBabs->sum('point_membaca') + $data->subBabs->sum('point_menonton_yt') + $data->subBabs->sum('point_tugas') }}</span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="m-0 py-2 limited-text-title" style="font-size: 18px; color: #012970;">
+                                        {{ $data->nama }}
+                                    </h5>
+                                    <p class="m-0 limited-text small">{{ $data->durasi }}</p>
+                                    <div class="d-flex justify-content-end mt-2 align-items-center">
+                                        @if ($data->status == 'belumAda')
+                                            <form id="form-beli-materi-{{ $data->id }}"
+                                                action="{{ route('mahasiswa.bab.beli', ['id' => $data->id]) }}"
+                                                method="POST" data-status="{{ $data->status }}">
+                                                @csrf
+                                                <input type="hidden" name="materi_id" value="{{ $data->id }}">
+                                                <i class="ri-money-dollar-box-fill text-success me-2"
+                                                    style="font-size: 20px"></i>
+                                                <span class="me-4">{{ $data->beli_point ?? 0 }}</span>
+                                                <button type="submit" class="btn btn-sm btn-success">
+                                                    Beli Materi
+                                                </button>
+                                            </form>
+                                        @else
+                                            <a href="{{ route('mahasiswa.sub_bab.index', ['id_bab' => $data->id]) }}"
+                                                class="btn btn-sm btn-outline-primary">Akses Materi</a>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
+            </div>
+            <div class="col-lg-4">
+                @include('layouts.partials.peringkat')
             </div>
         </div>
     </section>

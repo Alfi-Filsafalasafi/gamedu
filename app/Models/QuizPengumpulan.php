@@ -19,4 +19,7 @@ class QuizPengumpulan extends Model
     {
         return $this->belongsTo(Quiz::class, 'id_quiz');
     }
+    public function user() {
+        return $this->belongsTo(User::class, 'id_user');
+    }
 }
