@@ -10,6 +10,9 @@ use App\Models\SubBab;
 use App\Models\User;
 use App\Models\LogBabUser;
 use App\Models\LogSubBabUser;
+use App\Models\QuizPengumpulan;
+use App\Models\Quiz;
+
 use Illuminate\Support\Facades\Auth;
 
 function getBabWithStatus()
@@ -26,8 +29,14 @@ function getBabWithStatus()
         ->whereIn('id_bab', $babs->pluck('id'))
         ->get()
         ->groupBy('id_bab');
+    $quizPengumpulans = Quiz::whereIn('id_bab', $babs->pluck('id'))
+        ->with(['quizPengumpulan' => function($query) use ($id_user) {
+            $query->where('id_user', $id_user)->where('is_benar', 1);
+        }])
+        ->get()
+        ->groupBy('id_bab');
 
-    $babWithStatus = $babs->map(function ($bab) use ($logBabs, $logSubBabs) {
+    $babWithStatus = $babs->map(function ($bab) use ($logBabs, $logSubBabs, $quizPengumpulans) {
             $log = $logBabs->get($bab->id);
             $bab->status = $log ? $log->status : 'belumAda';
 
@@ -35,8 +44,18 @@ function getBabWithStatus()
             $bab->total_point_membaca = $logSubBab ? $logSubBab->sum('point_membaca') : 0;
             $bab->total_point_menonton_yt = $logSubBab ? $logSubBab->sum('point_menonton_yt') : 0; 
             $bab->total_point_tugas = $logSubBab ? $logSubBab->sum('point_tugas') : 0;
-            $bab->total_point_user = $bab->total_point_membaca +  $bab->total_point_menonton_yt + $bab->total_point_tugas;
-           
+
+            $quizPengumpulan = $quizPengumpulans->get($bab->id);
+            $total_quiz_benar = 0;
+            if ($quizPengumpulan) {
+                foreach ($quizPengumpulan as $quiz) {
+                    $total_quiz_benar += $quiz->quizPengumpulan->count() * 10;
+                }
+            }
+            $bab->total_quiz_benar = $total_quiz_benar;
+
+            $bab->total_point_user = $bab->total_point_membaca +  $bab->total_point_menonton_yt + $bab->total_point_tugas + $bab->total_quiz_benar;
+
             return $bab;
         });
         $babWithStatus = $babWithStatus->sortBy('index');
@@ -61,7 +80,9 @@ class BabMahasiswaController extends Controller
         $membaca_user = LogSubBabUser::where('id_user', $id_user)->sum('point_membaca');
         $menonton_yt_user = LogSubBabUser::where('id_user', $id_user)->sum('point_menonton_yt');
         $tugas_user = LogSubBabUser::where('id_user', $id_user)->sum('point_tugas');
-        $total_point_user = $membaca_user + $menonton_yt_user + $tugas_user;
+        $quiz_user = QuizPengumpulan::where('id_user', $id_user)->where('is_benar', 1)->count() * 10;
+        $total_point_user = $membaca_user + $menonton_yt_user + $tugas_user + $quiz_user;
+
         return view('pages.mahasiswa.bab.index', compact('datas', 'total_point', 'total_point_user'));
     }
 

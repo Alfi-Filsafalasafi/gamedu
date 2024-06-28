@@ -18,4 +18,8 @@ class Quiz extends Model
     {
         return $this->hasMany(SubQuiz::class, 'id_quiz');
     }
+    public function quizPengumpulan()
+    {
+        return $this->hasMany(QuizPengumpulan::class, 'id_quiz');
+    }
 }

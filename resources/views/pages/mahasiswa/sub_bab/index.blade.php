@@ -32,29 +32,82 @@
             </div>
             <div class="col-lg-8">
                 <div class="row justify-content-between">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <i class="ri-edit-box-fill bg-primary text-white px-2 py-1 rounded"
-                                    style="font-size: 20px"></i>
-                                <div class="d-flex align-items-center me-3">
-                                    <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 20px"></i>
-                                    <span class="" style="font-size: 16px"><b> 0 </b>
-                                        /
-                                        0</span>
+                    @if ($log_pre_test)
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <i class="ri-check-double-line bg-success text-white px-2 py-1 rounded"
+                                        style="font-size: 20px"></i>
+                                    @if ($jumlah_benar_pre_test >= $jumlah_pre_test / 1.5)
+                                        <div class="d-flex px-2 py-1 bg-emas rounded">
+                                            <i class="ri-star-fill text-warning" style="font-size:20px"></i>
+                                            <i class="ri-star-fill text-warning" style="font-size:20px"></i>
+                                            <i class="ri-star-fill text-warning" style="font-size:20px"></i>
+                                        </div>
+                                    @elseif($jumlah_benar_pre_test >= $jumlah_pre_test / 2)
+                                        <div class="d-flex px-2 py-1 bg-emas rounded">
+                                            <i class="ri-star-fill text-warning" style="font-size:20px"></i>
+                                            <i class="ri-star-fill text-warning" style="font-size:20px"></i>
+                                            <i class="ri-star-fill text-gray" style="font-size:20px"></i>
+                                        </div>
+                                    @elseif($jumlah_benar_pre_test >= $jumlah_pre_test / 8)
+                                        <div class="d-flex px-2 py-1 bg-emas rounded">
+                                            <i class="ri-star-fill text-warning" style="font-size:20px"></i>
+                                            <i class="ri-star-fill text-gray" style="font-size:20px"></i>
+                                            <i class="ri-star-fill text-gray" style="font-size:20px"></i>
+                                        </div>
+                                    @else
+                                        <div class="d-flex px-2 py-1 bg-emas rounded">
+                                            <i class="ri-star-fill text-gray" style="font-size:20px"></i>
+                                            <i class="ri-star-fill text-gray" style="font-size:20px"></i>
+                                            <i class="ri-star-fill text-gray" style="font-size:20px"></i>
+                                        </div>
+                                    @endif
+                                    <div class="d-flex align-items-center me-3">
+                                        <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 20px"></i>
+
+                                        <span class="" style="font-size: 16px"><b> {{ $jumlah_benar_pre_test }}
+                                            </b>
+                                            /
+                                            {{ $jumlah_pre_test }}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="m-0 pt-3 py-2 limited-text-title" style="font-size: 18px; color: #012970;">
-                                    Pre-test
-                                </h5>
-                                <div class="d-flex justify-content-end mt-2 align-items-center">
-                                    <a href="{{ route('mahasiswa.quiz.index', ['id_bab' => $bab->id, 'id' => $pre_test->id]) }}"
-                                        class="btn btn-sm btn-outline-primary">Akses Pre Test</a>
+                                <div class="card-body">
+                                    <h5 class="m-0 pt-3 py-2 limited-text-title" style="font-size: 18px; color: #012970;">
+                                        Pre-test
+                                    </h5>
+                                    <div class="d-flex justify-content-end mt-2 align-items-center">
+                                        <a href="{{ route('mahasiswa.quiz.index', ['id_bab' => $bab->id, 'id' => $pre_test->id]) }}"
+                                            class="btn btn-sm btn-outline-primary">Akses Pre Test</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @else
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <i class="ri-edit-box-fill bg-primary text-white px-2 py-1 rounded"
+                                        style="font-size: 20px"></i>
+                                    <div class="d-flex align-items-center me-3">
+                                        <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 20px"></i>
+                                        <span class="" style="font-size: 16px"><b> 0 </b>
+                                            /
+                                            {{ $jumlah_pre_test * 10 }}</span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="m-0 pt-3 py-2 limited-text-title" style="font-size: 18px; color: #012970;">
+                                        Pre-test
+                                    </h5>
+                                    <div class="d-flex justify-content-end mt-2 align-items-center">
+                                        <a href="{{ route('mahasiswa.quiz.index', ['id_bab' => $bab->id, 'id' => $pre_test->id]) }}"
+                                            class="btn btn-sm btn-outline-primary">Akses Pre Test</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     @foreach ($datas as $data)
                         <div class="col-md-6">
                             <div class="card">
@@ -75,19 +128,19 @@
                                                 <i class="ri-star-fill text-warning" style="font-size:20px"></i>
                                             </div>
                                         @elseif($data->log_point_user >= $data->bintang_2)
-                                            <div class="d-flex px-2 py-1 bg-secondary rounded">
+                                            <div class="d-flex px-2 py-1 bg-emas rounded">
                                                 <i class="ri-star-fill text-warning" style="font-size:20px"></i>
                                                 <i class="ri-star-fill text-warning" style="font-size:20px"></i>
                                                 <i class="ri-star-fill text-gray" style="font-size:20px"></i>
                                             </div>
                                         @elseif($data->log_point_user >= $data->bintang_1)
-                                            <div class="d-flex px-2 py-1 bg-secondary rounded">
+                                            <div class="d-flex px-2 py-1 bg-emas rounded">
                                                 <i class="ri-star-fill text-warning" style="font-size:20px"></i>
                                                 <i class="ri-star-fill text-gray" style="font-size:20px"></i>
                                                 <i class="ri-star-fill text-gray" style="font-size:20px"></i>
                                             </div>
                                         @else
-                                            <div class="d-flex px-2 py-1 bg-secondary rounded">
+                                            <div class="d-flex px-2 py-1 bg-emas rounded">
                                                 <i class="ri-star-fill text-gray" style="font-size:20px"></i>
                                                 <i class="ri-star-fill text-gray" style="font-size:20px"></i>
                                                 <i class="ri-star-fill text-gray" style="font-size:20px"></i>
@@ -96,7 +149,8 @@
                                     @endif
                                     <div class="d-flex align-items-center me-3">
                                         <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 20px"></i>
-                                        <span class="" style="font-size: 16px"><b>{{ $data->log_point_user ?? 0 }}</b>
+                                        <span class=""
+                                            style="font-size: 16px"><b>{{ $data->log_point_user ?? 0 }}</b>
                                             /
                                             {{ $data->point_membaca + $data->point_menonton_yt + $data->point_tugas }}</span>
                                     </div>

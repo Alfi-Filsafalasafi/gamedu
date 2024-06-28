@@ -10,6 +10,8 @@ use App\Models\LogBabUser;
 use App\Models\LogSubBabUser;
 use App\Models\User;
 use App\Models\Quiz;
+use App\Models\SubQuiz;
+use App\Models\QuizPengumpulan;
 use Illuminate\Support\Facades\Auth;
 use File;
 
@@ -40,6 +42,17 @@ function getPreTest($id_bab){
     $preTest = Quiz::where('id_bab', $id_bab)->where('type', 'pre-test')->first();
     return $preTest;
 }
+function jumlahPreTest($id_bab){
+    $preTest = Quiz::where('id_bab', $id_bab)->where('type', 'pre-test')->first();
+    $sub_quiz = SubQuiz::Where('id_quiz',$preTest->id)->get();
+    return $sub_quiz;
+}
+
+function logPreTest($id_bab, $id_user){
+    $preTest = Quiz::where('id_bab', $id_bab)->where('type', 'pre-test')->first();
+    $log = QuizPengumpulan::where('id_quiz', $preTest->id)->where('id_user', $id_user)->get();
+    return $log;
+}
 
 class SubBabMahasiswaController extends Controller
 {
@@ -69,11 +82,17 @@ class SubBabMahasiswaController extends Controller
         $membaca_user = $datas->sum('log_point_membaca');
         $menonton_yt_user = $datas->sum('log_point_menonton_yt');
         $tugas_user = $datas->sum('log_point_tugas');
-        $total_point_user = $membaca_user + $menonton_yt_user + $tugas_user;
 
         $pre_test = getPreTest($id_bab);
+        $jumlah_pre_test = jumlahPreTest($id_bab)->count() * 10;
+        $log_pre_test = logPreTest($id_bab, $userId);
+        $jumlah_benar_pre_test = logPreTest($id_bab, $userId)->where('is_benar', 1)->count() * 10;
 
-        return view('pages.mahasiswa.sub_bab.index', compact('datas', 'bab', 'total_point', 'total_point_user', 'pre_test'));
+        $total_point_user = $membaca_user + $menonton_yt_user + $tugas_user + $jumlah_benar_pre_test;
+
+        return view('pages.mahasiswa.sub_bab.index', 
+        compact('datas', 'bab', 'total_point', 'total_point_user', 
+                'pre_test','jumlah_pre_test', 'log_pre_test', 'jumlah_benar_pre_test'));
     }
 
     public function baca($id_bab, $id){

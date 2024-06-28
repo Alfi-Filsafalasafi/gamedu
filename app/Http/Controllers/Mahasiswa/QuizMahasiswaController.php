@@ -8,8 +8,14 @@ use App\Models\User;
 use App\Models\Quiz;
 use App\Models\QuizPengumpulan;
 use App\Models\SubQuiz;
+use App\Models\LogBabUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+
+function logBabUser($id_user, $id_bab){
+    $logBabUser = LogBabUser::where('id_user', $id_user)->where('id_bab', $id_bab)->first();
+    return $logBabUser;
+}
 
 class QuizMahasiswaController extends Controller
 {
@@ -17,16 +23,29 @@ class QuizMahasiswaController extends Controller
     public function index($id_bab, $id){
         $id_user = Auth::id();
 
+        
+
         $quiz = Quiz::findOrFail($id);
         $datas = SubQuiz::where('id_quiz', $id)->get();
         $jumlah_point = $datas->count() * 10;
+
+        $log = logBabUser($id_user, $quiz->id_bab);
+        //check apakah user sudah membeli bab ini
+        if(!$log){
+            return redirect()->route('404');
+        }
+
+        //check apakah user telah menyelesaikan seluruh pembelajaran pada bab
+        if($quiz->type =='post-test' && $log->status == 'progress'){
+            return redirect()->route('404');
+        }
 
         $quiz_pengumpulan = QuizPengumpulan::where('id_user', $id_user)->where('id_quiz', $id)->first();
 
         if($quiz_pengumpulan){
             return redirect()->route('mahasiswa.quiz.berhasil', ['id_bab' => $id_bab, 'id' => $id]);
         }
-        
+
         return view('pages.mahasiswa.quiz.index', compact('quiz', 'datas', 'jumlah_point'));
     }
 
