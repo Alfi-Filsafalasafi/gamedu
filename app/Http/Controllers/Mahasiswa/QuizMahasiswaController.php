@@ -15,16 +15,18 @@ class QuizMahasiswaController extends Controller
 {
     //
     public function index($id_bab, $id){
+        $id_user = Auth::id();
+
         $quiz = Quiz::findOrFail($id);
         $datas = SubQuiz::where('id_quiz', $id)->get();
         $jumlah_point = $datas->count() * 10;
 
-        $datas = QuizPengumpulan::with('subQuiz')
-            ->where('id_user', Auth::id())
-            ->whereHas('subQuiz', function($query) use ($id) {
-                $query->where('id_quiz', $id);
-            })
-            ->get();
+        $quiz_pengumpulan = QuizPengumpulan::where('id_user', $id_user)->where('id_quiz', $id)->first();
+
+        if($quiz_pengumpulan){
+            return redirect()->route('mahasiswa.quiz.berhasil', ['id_bab' => $id_bab, 'id' => $id]);
+        }
+        
         return view('pages.mahasiswa.quiz.index', compact('quiz', 'datas', 'jumlah_point'));
     }
 
@@ -70,6 +72,12 @@ class QuizMahasiswaController extends Controller
     }
 
     public function berhasil($id_bab, $id){
+        $id_user = Auth::id();
+        $quiz_pengumpulan = QuizPengumpulan::where('id_user', $id_user)->where('id_quiz', $id)->first();
+        if(!$quiz_pengumpulan){
+            return redirect()->route('mahasiswa.quiz.index', ['id_bab' => $id_bab, 'id' => $id]);
+
+        }
         $quiz = Quiz::findOrFail($id);
         $datas = QuizPengumpulan::with('subQuiz')
             ->where('id_user', Auth::id())

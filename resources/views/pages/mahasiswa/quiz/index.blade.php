@@ -56,7 +56,7 @@
                                         <div class="d-flex align-items-start">
                                             <p><b class="me-2">{{ $loop->iteration }}</b>. </p>
                                             <div class="m-1">
-                                                {!! $quiz->subQuiz->pertanyaan !!}
+                                                {!! $quiz->pertanyaan !!}
                                             </div>
                                         </div>
                                         <div class="form-group ms-4">
@@ -65,14 +65,14 @@
                                                     <div class="d-flex">
                                                         <input type="hidden"
                                                             name="jawaban[{{ $quizIndex }}][id_pertanyaan]"
-                                                            value="{{ $quiz->subQuiz->id }}">
+                                                            value="{{ $quiz->id }}">
                                                         <label class="form-check-label">
                                                             <input type="radio" class="form-check-input"
                                                                 name="jawaban[{{ $quizIndex }}][jawaban]"
                                                                 value="{{ $jawabanIndex }}"
                                                                 @if (old("jawaban.$quizIndex.jawaban") == $jawabanIndex) checked @endif />
                                                         </label>
-                                                        {!! $quiz->subQuiz->{'jawaban_' . strtolower($jawabanIndex)} !!}
+                                                        {!! $quiz->{'jawaban_' . strtolower($jawabanIndex)} !!}
                                                     </div>
                                                 </div>
                                             @endforeach
