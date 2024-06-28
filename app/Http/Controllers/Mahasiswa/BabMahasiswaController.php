@@ -84,7 +84,7 @@ class BabMahasiswaController extends Controller
                 alert()->success('Berhasil','Silahkan akses materi dan belajar dengan rajin');
                 return back();
             } catch (\Throwable $th) {
-                alert()->success('Gagal','Silahkan coba lagi');
+                alert()->error('Gagal','Silahkan coba lagi');
                 return back();
             }
         }

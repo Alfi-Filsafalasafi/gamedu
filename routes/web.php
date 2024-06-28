@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Mahasiswa\HomeMahasiswaController;
 use App\Http\Controllers\Mahasiswa\BabMahasiswaController;
 use App\Http\Controllers\Mahasiswa\SubBabMahasiswaController;
+use App\Http\Controllers\Mahasiswa\QuizMahasiswaController;
 
 use App\Http\Controllers\Dosen\HomeDosenController;
 use App\Http\Controllers\Dosen\BabDosenController;
@@ -55,7 +56,13 @@ Route::middleware(['role:mahasiswa'])->group(function () {
             Route::get('/baca/{id}', [SubBabMahasiswaController::class, 'baca'])->name('baca');
             Route::patch('/selesai-baca/{id}', [SubBabMahasiswaController::class, 'selesaiBaca'])->name('selesaiBaca');
             Route::patch('/selesai-menonton-yt/{id}', [SubBabMahasiswaController::class, 'selesaiMenontonYt'])->name('selesaiMenontonYt');
-            Route::patch('/pengumpulan-tugas/{id}', [SubBabMahasiswaController::class, 'pengumpulanTugas'])->name('pengumpulanTugas');
+            Route::patch('/pengumpulan-tugas/{id}', [SubBabMahasiswaController::class, 'pengumpulanTugas'])->name('pengumpulanTugas');            
+        });
+        Route::prefix('quiz/{id_bab}')->name('quiz.')->group(function(){
+            Route::get('/{id}', [QuizMahasiswaController::class, 'index'])->name('index');
+            Route::get('/{id}/berhasil', [QuizMahasiswaController::class, 'berhasil'])->name('berhasil');
+            Route::post('/{id}', [QuizMahasiswaController::class, 'submitJawaban'])->name('submitJawaban');
+
         });
     });
 

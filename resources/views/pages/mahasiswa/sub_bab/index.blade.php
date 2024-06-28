@@ -32,6 +32,29 @@
             </div>
             <div class="col-lg-8">
                 <div class="row justify-content-between">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <i class="ri-edit-box-fill bg-primary text-white px-2 py-1 rounded"
+                                    style="font-size: 20px"></i>
+                                <div class="d-flex align-items-center me-3">
+                                    <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 20px"></i>
+                                    <span class="" style="font-size: 16px"><b> 0 </b>
+                                        /
+                                        0</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="m-0 pt-3 py-2 limited-text-title" style="font-size: 18px; color: #012970;">
+                                    Pre-test
+                                </h5>
+                                <div class="d-flex justify-content-end mt-2 align-items-center">
+                                    <a href="{{ route('mahasiswa.quiz.index', ['id_bab' => $bab->id, 'id' => $pre_test->id]) }}"
+                                        class="btn btn-sm btn-outline-primary">Akses Pre Test</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     @foreach ($datas as $data)
                         <div class="col-md-6">
                             <div class="card">

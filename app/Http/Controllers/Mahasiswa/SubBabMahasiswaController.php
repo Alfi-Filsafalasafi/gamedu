@@ -9,6 +9,7 @@ use App\Models\SubBab;
 use App\Models\LogBabUser;
 use App\Models\LogSubBabUser;
 use App\Models\User;
+use App\Models\Quiz;
 use Illuminate\Support\Facades\Auth;
 use File;
 
@@ -33,6 +34,11 @@ function getSubBabWithStatus($id_bab, $id_user) {
     $subBabsWithStatus = $subBabsWithStatus->sortBy('index');
 
     return $subBabsWithStatus;
+}
+
+function getPreTest($id_bab){
+    $preTest = Quiz::where('id_bab', $id_bab)->where('type', 'pre-test')->first();
+    return $preTest;
 }
 
 class SubBabMahasiswaController extends Controller
@@ -65,7 +71,9 @@ class SubBabMahasiswaController extends Controller
         $tugas_user = $datas->sum('log_point_tugas');
         $total_point_user = $membaca_user + $menonton_yt_user + $tugas_user;
 
-        return view('pages.mahasiswa.sub_bab.index', compact('datas', 'bab', 'total_point', 'total_point_user'));
+        $pre_test = getPreTest($id_bab);
+
+        return view('pages.mahasiswa.sub_bab.index', compact('datas', 'bab', 'total_point', 'total_point_user', 'pre_test'));
     }
 
     public function baca($id_bab, $id){
