@@ -29,29 +29,24 @@
                     @foreach ($datas as $data)
                         <div class="col-md-6">
                             <div class="card">
-                                @if ($data->status == 'belumAda')
-                                    <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    @if ($data->status == 'belumAda')
                                         <i class="ri-lock-fill bg-danger text-white px-2 py-1 rounded"
                                             style="font-size: 20px"></i>
-                                        <div class="d-flex align-items-center me-3">
-                                            <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 20px"></i>
-                                            <span class=""
-                                                style="font-size: 16px"><b>{{ $data->total_point_user ?? 0 }}</b> /
-                                                {{ $data->subBabs->sum('point_membaca') + $data->subBabs->sum('point_menonton_yt') + $data->subBabs->sum('point_tugas') }}</span>
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="d-flex justify-content-between align-items-center">
+                                    @elseif($data->status == 'progress')
                                         <i class="ri-door-open-fill bg-primary text-white px-2 py-1 rounded"
                                             style="font-size: 20px"></i>
-                                        <div class="d-flex align-items-center me-3">
-                                            <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 20px"></i>
-                                            <span class=""
-                                                style="font-size: 16px"><b>{{ $data->total_point_user ?? 0 }}</b> /
-                                                {{ $data->subBabs->sum('point_membaca') + $data->subBabs->sum('point_menonton_yt') + $data->subBabs->sum('point_tugas') }}</span>
-                                        </div>
+                                    @elseif($data->status == 'selesai')
+                                        <i class="ri-check-double-line bg-success text-white px-2 py-1 rounded"
+                                            style="font-size: 20px"></i>
+                                    @endif
+                                    <div class="d-flex align-items-center me-3">
+                                        <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 20px"></i>
+                                        <span class=""
+                                            style="font-size: 16px"><b>{{ $data->total_point_user ?? 0 }}</b> /
+                                            {{ $data->subBabs->sum('point_membaca') + $data->subBabs->sum('point_menonton_yt') + $data->subBabs->sum('point_tugas') }}</span>
                                     </div>
-                                @endif
+                                </div>
                                 <div class="card-body">
                                     <h5 class="m-0 py-2 limited-text-title" style="font-size: 18px; color: #012970;">
                                         {{ $data->nama }}

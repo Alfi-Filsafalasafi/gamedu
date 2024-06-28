@@ -66,13 +66,15 @@
                                                         <input type="hidden"
                                                             name="jawaban[{{ $quizIndex }}][id_pertanyaan]"
                                                             value="{{ $quiz->id }}">
-                                                        <label class="form-check-label">
-                                                            <input type="radio" class="form-check-input"
-                                                                name="jawaban[{{ $quizIndex }}][jawaban]"
-                                                                value="{{ $jawabanIndex }}"
-                                                                @if (old("jawaban.$quizIndex.jawaban") == $jawabanIndex) checked @endif />
+                                                        <input type="radio" class="form-check-input"
+                                                            id="jawaban_{{ $quizIndex }}_{{ $jawabanIndex }}"
+                                                            name="jawaban[{{ $quizIndex }}][jawaban]"
+                                                            value="{{ $jawabanIndex }}"
+                                                            @if (old("jawaban.$quizIndex.jawaban") == $jawabanIndex) checked @endif />
+                                                        <label class="form-check-label ms-3"
+                                                            for="jawaban_{{ $quizIndex }}_{{ $jawabanIndex }}">
+                                                            {!! $quiz->{'jawaban_' . strtolower($jawabanIndex)} !!}
                                                         </label>
-                                                        {!! $quiz->{'jawaban_' . strtolower($jawabanIndex)} !!}
                                                     </div>
                                                 </div>
                                             @endforeach

@@ -87,7 +87,14 @@ class SubBabMahasiswaController extends Controller
         }
         // $datas = SubBab::where('id_bab', $id_bab)->orderBy('index', 'asc')->get();
         $datas = getSubBabWithStatus($id_bab, $userId);
-        // dd($datas);
+        $openPostTest = true;
+        foreach ($datas as $data) {
+            if ($data->status !== 'selesai') {
+                $openPostTest = false;
+                break;
+            }
+        }
+
         $bab = Bab::findOrFail($id_bab);
 
         $membaca = SubBab::where('id_bab', $id_bab)->sum('point_membaca');
@@ -114,7 +121,7 @@ class SubBabMahasiswaController extends Controller
         return view('pages.mahasiswa.sub_bab.index', 
         compact('datas', 'bab','logBabUser', 'total_point', 'total_point_user', 
                 'pre_test','jumlah_pre_test', 'log_pre_test', 'jumlah_benar_pre_test',
-                'post_test','jumlah_post_test', 'log_post_test', 'jumlah_benar_post_test'));
+                'post_test','jumlah_post_test', 'log_post_test', 'jumlah_benar_post_test', 'openPostTest'));
     }
 
     public function baca($id_bab, $id){

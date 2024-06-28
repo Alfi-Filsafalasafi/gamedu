@@ -4,17 +4,37 @@ namespace App\Http\Controllers\Mahasiswa;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Bab;
+use App\Models\SubBab;
 use App\Models\User;
 use App\Models\Quiz;
 use App\Models\QuizPengumpulan;
 use App\Models\SubQuiz;
 use App\Models\LogBabUser;
+use App\Models\LogSubBabUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 function logBabUser($id_user, $id_bab){
     $logBabUser = LogBabUser::where('id_user', $id_user)->where('id_bab', $id_bab)->first();
     return $logBabUser;
+}
+
+function getSubBabWithStatus($id_bab, $id_user) {
+    $subBabs = SubBab::where('id_bab', $id_bab)->get();
+
+    $logSubBabs = LogSubBabUser::where('id_user', $id_user)
+        ->whereIn('id_sub_bab', $subBabs->pluck('id'))
+        ->get()
+        ->keyBy('id_sub_bab');
+
+    $subBabsWithStatus = $subBabs->map(function ($subBab) use ($logSubBabs) {
+        $log = $logSubBabs->get($subBab->id);
+        $subBab->status = $log ? $log->status : 'belumAda';
+        return $subBab;
+    });
+
+    return $subBabsWithStatus;
 }
 
 class QuizMahasiswaController extends Controller
@@ -36,7 +56,16 @@ class QuizMahasiswaController extends Controller
         }
 
         //check apakah user telah menyelesaikan seluruh pembelajaran pada bab
-        if($quiz->type =='post-test' && $log->status == 'progress'){
+        $logs = getSubBabWithStatus($id_bab, $id_user);
+        $openPostTest = true;
+        foreach ($logs as $data) {
+            if ($data->status !== 'selesai') {
+                $openPostTest = false;
+                break;
+            }
+        }
+
+        if($quiz->type =='post-test' && !$openPostTest){
             return redirect()->route('404');
         }
 
@@ -79,6 +108,16 @@ class QuizMahasiswaController extends Controller
                         'jawaban'       => $answer['jawaban'],
                         'is_benar'    => $isCorrect,
                     ]);
+                $user = User::findOrFail($user_id);
+                if ($isCorrect) {
+                    $user->increment('uang', 10);
+                }
+                $quiz = Quiz::findOrFail($id);
+                if($quiz->type == 'post-test'){
+                    $logBabUser = LogBabUser::where('id_user', $user_id)->where('id_bab', $quiz->id_bab)->first();
+                    $logBabUser->status = "selesai";
+                    $logBabUser->save();
+                }
             }
 
             alert()->success('Berhasil','Jawaban anda telah berhasil disimpan');
