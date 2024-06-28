@@ -53,6 +53,9 @@ Route::middleware(['role:mahasiswa'])->group(function () {
             Route::get('/', [SubBabMahasiswaController::class, 'index'])->name('index');
             Route::post('/{id}', [SubBabMahasiswaController::class, 'beli'])->name('beli');
             Route::get('/baca/{id}', [SubBabMahasiswaController::class, 'baca'])->name('baca');
+            Route::patch('/selesai-baca/{id}', [SubBabMahasiswaController::class, 'selesaiBaca'])->name('selesaiBaca');
+            Route::patch('/selesai-menonton-yt/{id}', [SubBabMahasiswaController::class, 'selesaiMenontonYt'])->name('selesaiMenontonYt');
+            Route::patch('/pengumpulan-tugas/{id}', [SubBabMahasiswaController::class, 'pengumpulanTugas'])->name('pengumpulanTugas');
         });
     });
 

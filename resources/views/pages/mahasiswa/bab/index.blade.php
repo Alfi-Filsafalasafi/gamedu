@@ -18,7 +18,7 @@
                     </nav>
                     <div class="d-flex align-items-center">
                         <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 28px"></i>
-                        <span class="" style="font-size: 20px"><b>{{ auth()->user()->uang ?? 0 }}</b> /
+                        <span class="" style="font-size: 20px"><b>{{ $total_point_user ?? 0 }}</b> /
                             {{ $total_point }}</span>
                     </div>
                 </div>
@@ -35,7 +35,8 @@
                                             style="font-size: 20px"></i>
                                         <div class="d-flex align-items-center me-3">
                                             <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 20px"></i>
-                                            <span class="" style="font-size: 16px"><b>0</b> /
+                                            <span class=""
+                                                style="font-size: 16px"><b>{{ $data->total_point_user ?? 0 }}</b> /
                                                 {{ $data->subBabs->sum('point_membaca') + $data->subBabs->sum('point_menonton_yt') + $data->subBabs->sum('point_tugas') }}</span>
                                         </div>
                                     </div>
@@ -45,7 +46,8 @@
                                             style="font-size: 20px"></i>
                                         <div class="d-flex align-items-center me-3">
                                             <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 20px"></i>
-                                            <span class="" style="font-size: 16px"><b>0</b> /
+                                            <span class=""
+                                                style="font-size: 16px"><b>{{ $data->total_point_user ?? 0 }}</b> /
                                                 {{ $data->subBabs->sum('point_membaca') + $data->subBabs->sum('point_menonton_yt') + $data->subBabs->sum('point_tugas') }}</span>
                                         </div>
                                     </div>

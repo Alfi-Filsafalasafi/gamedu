@@ -19,7 +19,7 @@
                     </nav>
                     <div class="d-flex align-items-center">
                         <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 28px"></i>
-                        <span class="" style="font-size: 20px"><b>{{ auth()->user()->uang ?? 0 }}</b> /
+                        <span class="" style="font-size: 20px"><b>{{ $total_point_user }}</b> /
                             {{ $total_point }}</span>
                     </div>
                 </div>
@@ -39,21 +39,49 @@
                                     @if ($data->status == 'belumAda')
                                         <i class="ri-lock-fill bg-danger text-white px-2 py-1 rounded"
                                             style="font-size: 20px"></i>
-                                    @else
+                                    @elseif($data->status == 'progress')
                                         <i class="ri-door-open-fill bg-primary text-white px-2 py-1 rounded"
                                             style="font-size: 20px"></i>
+                                    @elseif($data->status == 'selesai')
+                                        <i class="ri-check-double-line bg-success text-white px-2 py-1 rounded"
+                                            style="font-size: 20px"></i>
+                                        @if ($data->log_point_user >= $data->bintang_3)
+                                            <div class="d-flex px-2 py-1 bg-emas rounded">
+                                                <i class="ri-star-fill text-warning" style="font-size:20px"></i>
+                                                <i class="ri-star-fill text-warning" style="font-size:20px"></i>
+                                                <i class="ri-star-fill text-warning" style="font-size:20px"></i>
+                                            </div>
+                                        @elseif($data->log_point_user >= $data->bintang_2)
+                                            <div class="d-flex px-2 py-1 bg-secondary rounded">
+                                                <i class="ri-star-fill text-warning" style="font-size:20px"></i>
+                                                <i class="ri-star-fill text-warning" style="font-size:20px"></i>
+                                                <i class="ri-star-fill text-gray" style="font-size:20px"></i>
+                                            </div>
+                                        @elseif($data->log_point_user >= $data->bintang_1)
+                                            <div class="d-flex px-2 py-1 bg-secondary rounded">
+                                                <i class="ri-star-fill text-warning" style="font-size:20px"></i>
+                                                <i class="ri-star-fill text-gray" style="font-size:20px"></i>
+                                                <i class="ri-star-fill text-gray" style="font-size:20px"></i>
+                                            </div>
+                                        @else
+                                            <div class="d-flex px-2 py-1 bg-secondary rounded">
+                                                <i class="ri-star-fill text-gray" style="font-size:20px"></i>
+                                                <i class="ri-star-fill text-gray" style="font-size:20px"></i>
+                                                <i class="ri-star-fill text-gray" style="font-size:20px"></i>
+                                            </div>
+                                        @endif
                                     @endif
                                     <div class="d-flex align-items-center me-3">
                                         <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 20px"></i>
-                                        <span class="" style="font-size: 16px"><b>0</b> /
+                                        <span class="" style="font-size: 16px"><b>{{ $data->log_point_user ?? 0 }}</b>
+                                            /
                                             {{ $data->point_membaca + $data->point_menonton_yt + $data->point_tugas }}</span>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="m-0 py-2 limited-text-title" style="font-size: 18px; color: #012970;">
+                                    <h5 class="m-0 pt-3 py-2 limited-text-title" style="font-size: 18px; color: #012970;">
                                         {{ $data->nama }}
                                     </h5>
-                                    <p class="m-0 limited-text small">{{ $data->deskripsi }}</p>
                                     <div class="d-flex justify-content-end mt-2 align-items-center">
                                         @if ($data->status == 'belumAda')
                                             <form id="form-beli-sub-materi-{{ $data->id }}"

@@ -19,6 +19,10 @@ return new class extends Migration
             $table->enum('status', ['belumAda', 'progress', 'selesai'])->nullable();
             $table->float('point_membaca')->nullable();
             $table->float('point_menonton_yt')->nullable();
+            $table->text('file_tugas')->nullable();
+            $table->enum('status_tugas',['submit', 'revisi', 'selesai'])->nullable();
+            $table->float('point_tugas')->nullable();
+            $table->text('catatan_tugas')->nullable();
             $table->timestamps();
         });
     }

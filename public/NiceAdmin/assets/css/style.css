@@ -1252,3 +1252,9 @@ h6 {
   max-height: 3em; /* Adjust based on your line-height */
   line-height: 1.6em; /* Adjust this value to your actual line-height */
 }
+.text-gray{
+  color: #cecece;
+}
+.bg-emas{
+  background: #fff0c4;
+}

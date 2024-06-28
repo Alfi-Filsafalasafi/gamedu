@@ -77,12 +77,12 @@
                                 <input type="number" min="0" name="point_menonton_yt" class="form-control"
                                     id="point_menonton_yt" value="{{ old('point_menonton_yt') }}">
                             </div>
-                            <hr>
                             <div class="col-md-12">
                                 <label for="point_tugas" class="form-label">Point Tugas</label>
                                 <input type="number" min="0"name=" point_tugas" class="form-control"
                                     id="point_tugas" value="{{ old('point_tugas') }}" required>
                             </div>
+                            <hr>
                             <div class="row mt-3">
                                 <label for="bintang_1" class="col-sm-4 col-md-2 col-form-label">Bintang 1</label>
                                 <div class="col-sm-8 col-md-6">

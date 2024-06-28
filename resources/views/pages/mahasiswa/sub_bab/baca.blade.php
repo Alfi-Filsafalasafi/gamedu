@@ -3,6 +3,8 @@
 @section('dashboard', 'nav-link collapsed')
 @section('materi', 'nav-link ')
 @section('content')
+    @include('sweetalert::alert')
+
     <section class="section">
         <div class="row">
             <div class="pagetitle">
@@ -20,7 +22,9 @@
                     </nav>
                     <div class="d-flex align-items-center">
                         <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 28px"></i>
-                        <span class="" style="font-size: 24px"><b>{{ auth()->user()->uang ?? 0 }}</b> /
+                        <span class=""
+                            style="font-size: 24px"><b>{{ $logSubBabUser->point_membaca + $logSubBabUser->point_menonton_yt + $logSubBabUser->point_tugas }}</b>
+                            /
                             {{ $data->point_membaca + $data->point_menonton_yt + $data->point_tugas }}</span>
                     </div>
                 </div>
@@ -34,18 +38,31 @@
                                 <i class="bx bx-history" style="font-size:24px"></i>
                                 <small class="mx-2 mb-0">{{ $data->min_akses_materi }}</small>
                                 <i class="ri-copper-coin-fill" style="color:#ffd700; font-size:24px"></i>
-                                <strong class="ms-2 mb-0">{{ $data->point_membaca }}</strong>
+                                <span class="ms-2 mb-0"><b>{{ $logSubBabUser->point_membaca ?? 0 }}</b> /
+                                    {{ $data->point_membaca }} </span>
                             </div>
                         </div>
                         {!! $data->content !!}
 
                         <div class="d-flex justify-content-end">
-                            <form class="forms-sample" action="" method="POST">
-                                @csrf
-                                <span id="timerMembaca" class="me-3"></span>
-                                <button type="submit" class="btn btn-sm btn-outline-primary btn-fw" id="membacaId"
-                                    disabled>Selesai</button>
-                            </form>
+                            @if ($logSubBabUser->point_membaca == null || $logSubBabUser->point_membaca == 0)
+                                <form class="forms-sample"
+                                    action="{{ route('mahasiswa.sub_bab.selesaiBaca', ['id_bab' => $bab->id, 'id' => $data->id]) }}"
+                                    method="POST" id="selesaiBacaForm">
+                                    @csrf
+                                    @method('PATCH')
+                                    <span id="timerMembaca" class="me-3"></span>
+                                    <button type="button" class="btn btn-sm btn-outline-primary btn-fw" id="membacaId"
+                                        onclick="confirmMembaca()" disabled>Selesai</button>
+                                </form>
+                            @else
+                                <i class="ri-star-fill" style="color:#ffd700; font-size:24px"></i>
+                                <i class="ri-star-fill" style="color:#ffd700; font-size:24px"></i>
+                                <i class="ri-star-fill" style="color:#ffd700; font-size:24px"></i>
+
+                                <button type="button" class="btn btn-sm btn-outline-secondary btn-fw ms-3" disabled>Sudah
+                                    Selesai</button>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -58,19 +75,33 @@
                                     <i class="bx bx-history" style="font-size:24px"></i>
                                     <small class="mx-2 mb-0">{{ $data->min_akses_yt }}</small>
                                     <i class="ri-copper-coin-fill" style="color:#ffd700; font-size:24px"></i>
-                                    <strong class="ms-2 mb-0">{{ $data->point_menonton_yt }}</strong>
+                                    <span class="ms-2 mb-0"> <b>{{ $logSubBabUser->point_menonton_yt ?? 0 }} </b> /
+                                        {{ $data->point_menonton_yt }}</span>
                                 </div>
                             </div>
                             <div class="embed-responsive embed-responsive-16by9 my-2">
                                 <div id="player"></div>
                             </div>
                             <div class="d-flex justify-content-end">
-                                <form class="forms-sample" action="" method="POST">
-                                    @csrf
-                                    <span id="timerYt" class="me-3"></span>
-                                    <button type="submit" class="btn btn-sm btn-outline-primary btn-fw" id="ytId"
-                                        disabled>Selesai</button>
-                                </form>
+                                @if ($logSubBabUser->point_menonton_yt == null || $logSubBabUser->point_menonton_yt == 0)
+                                    <form class="forms-sample"
+                                        action="{{ route('mahasiswa.sub_bab.selesaiMenontonYt', ['id_bab' => $bab->id, 'id' => $data->id]) }}"
+                                        method="POST" id="selesaiMenontonYtForm">
+                                        @csrf
+                                        @method('PATCH')
+                                        <span id="timerYt" class="me-3"></span>
+                                        <button type="button" class="btn btn-sm btn-outline-primary btn-fw" id="ytId"
+                                            onclick="confirmMenontonYt()" disabled>Selesai</button>
+                                    </form>
+                                @else
+                                    <i class="ri-star-fill" style="color:#ffd700; font-size:24px"></i>
+                                    <i class="ri-star-fill" style="color:#ffd700; font-size:24px"></i>
+                                    <i class="ri-star-fill" style="color:#ffd700; font-size:24px"></i>
+
+                                    <button type="button" class="btn btn-sm btn-outline-secondary btn-fw ms-3"
+                                        disabled>Sudah
+                                        Selesai</button>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -84,11 +115,66 @@
                                 <strong>Tugas</strong>
                                 <div class="d-flex align-items-center">
                                     <i class="ri-copper-coin-fill" style="color:#ffd700; font-size:24px"></i>
-                                    <strong class="ms-2 mb-0">{{ $data->point_tugas }}</strong>
+                                    <span class="ms-2 mb-0"> <b>{{ $logSubBabUser->point_tugas ?? 0 }} </b> /
+                                        {{ $data->point_tugas }}</span>
                                 </div>
                             </div>
                         </div>
                         {!! $data->uraian_tugas !!}
+                        @if ($logSubBabUser->status_tugas == '')
+                            <small><b>Pengumpulan tugas</b></small>
+
+                            <form class="needs-validation"
+                                action="{{ route('mahasiswa.sub_bab.pengumpulanTugas', ['id_bab' => $bab->id, 'id' => $data->id]) }}"
+                                method="POST" id="pengumpulanTugasForm" enctype="multipart/form-data" novalidate>
+                                @csrf
+                                @method('PATCH')
+                                <input class="form-control mt-2" name="file_tugas" type="file" id="formFile" required />
+                                <button type="button" class="btn btn-sm btn-primary w-100 btn-fw mt-2" id="tugasId"
+                                    onclick="pengumpulanTugas()">Submit</button>
+                            </form>
+                        @elseif($logSubBabUser->status_tugas == 'submit')
+                            <small>file tugas anda</small> <br>
+                            <a
+                                href="{{ asset($logSubBabUser->file_tugas) }}">{{ basename($logSubBabUser->file_tugas) }}</a>
+                            <div class="alert alert-info mt-2" role="alert">
+                                <i class="bi bi-info-circle me-1"></i>
+                                <small>Tugas anda akan direview oleh dosen, silahkan ditunggu</small>
+                            </div>
+                        @elseif($logSubBabUser->status_tugas == 'revisi')
+                            <small>file tugas anda</small> <br>
+                            <a
+                                href="{{ asset($logSubBabUser->file_tugas) }}">{{ basename($logSubBabUser->file_tugas) }}</a>
+                            <div class="alert alert-warning mt-2" role="alert">
+                                <i class="bi bi-exclamation-triangle me-1"></i>
+                                <small>Anda harus merevisi tugas dan mengumpulkan hasil revisian</small>
+                            </div>
+                            <div class="alert alert-warning mt-2" role="alert">
+                                <small><b>Catatan dosen :</b>
+                                    {!! $logSubBabUser->catatan_tugas !!}
+                                </small>
+                            </div>
+                            <small><b>Pengumpulan tugas hasil revisi</b></small>
+
+                            <form class="needs-validation"
+                                action="{{ route('mahasiswa.sub_bab.pengumpulanTugas', ['id_bab' => $bab->id, 'id' => $data->id]) }}"
+                                method="POST" id="pengumpulanTugasForm" enctype="multipart/form-data" novalidate>
+                                @csrf
+                                @method('PATCH')
+                                <input class="form-control mt-2" name="file_tugas" type="file" id="formFile"
+                                    required />
+                                <button type="button" class="btn btn-sm btn-primary w-100 btn-fw mt-2" id="tugasId"
+                                    onclick="pengumpulanTugas()">Submit</button>
+                            </form>
+                        @elseif($logSubBabUser->status_tugas == 'selesai')
+                            <small>file tugas anda</small> <br>
+                            <a
+                                href="{{ asset($logSubBabUser->file_tugas) }}">{{ basename($logSubBabUser->file_tugas) }}</a>
+                            <div class="alert alert-success mt-2" role="alert">
+                                <i class="bi bi-check-circle me-1"></i>
+                                <small>Tugas anda telah diterima dan nilai oleh dosen</small>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -185,5 +271,56 @@
                 }
             }
         });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmMembaca() {
+            Swal.fire({
+                title: 'Apakah Anda yakin telah membaca?',
+                text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, telah selesai!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('selesaiBacaForm').submit();
+                }
+            });
+        }
+
+        function confirmMenontonYt() {
+            Swal.fire({
+                title: 'Apakah Anda yakin telah menonton?',
+                text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, telah selesai!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('selesaiMenontonYtForm').submit();
+                }
+            });
+        }
+
+        function pengumpulanTugas() {
+            Swal.fire({
+                title: 'Apakah Anda yakin ingin mengumpulkan tugas dengan file ini?',
+                text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, saya yakin!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('pengumpulanTugasForm').submit();
+                }
+            });
+        }
     </script>
 @endsection
