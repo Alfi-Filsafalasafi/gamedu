@@ -38,6 +38,7 @@ function getSubBabWithStatus($id_bab, $id_user) {
     return $subBabsWithStatus;
 }
 
+
 function getPreTest($id_bab){
     $preTest = Quiz::where('id_bab', $id_bab)->where('type', 'pre-test')->first();
     return $preTest;
@@ -51,6 +52,22 @@ function jumlahPreTest($id_bab){
 function logPreTest($id_bab, $id_user){
     $preTest = Quiz::where('id_bab', $id_bab)->where('type', 'pre-test')->first();
     $log = QuizPengumpulan::where('id_quiz', $preTest->id)->where('id_user', $id_user)->get();
+    return $log;
+}
+
+function getPostTest($id_bab){
+    $postTest = Quiz::where('id_bab', $id_bab)->where('type', 'post-test')->first();
+    return $postTest;
+}
+function jumlahPostTest($id_bab){
+    $postTest = Quiz::where('id_bab', $id_bab)->where('type', 'post-test')->first();
+    $sub_quiz = SubQuiz::Where('id_quiz',$postTest->id)->get();
+    return $sub_quiz;
+}
+
+function logPostTest($id_bab, $id_user){
+    $postTest = Quiz::where('id_bab', $id_bab)->where('type', 'post-test')->first();
+    $log = QuizPengumpulan::where('id_quiz', $postTest->id)->where('id_user', $id_user)->get();
     return $log;
 }
 
@@ -73,7 +90,6 @@ class SubBabMahasiswaController extends Controller
         // dd($datas);
         $bab = Bab::findOrFail($id_bab);
 
-
         $membaca = SubBab::where('id_bab', $id_bab)->sum('point_membaca');
         $menonton_yt = SubBab::where('id_bab', $id_bab)->sum('point_menonton_yt');
         $tugas = SubBab::where('id_bab', $id_bab)->sum('point_tugas');
@@ -88,11 +104,17 @@ class SubBabMahasiswaController extends Controller
         $log_pre_test = logPreTest($id_bab, $userId);
         $jumlah_benar_pre_test = logPreTest($id_bab, $userId)->where('is_benar', 1)->count() * 10;
 
-        $total_point_user = $membaca_user + $menonton_yt_user + $tugas_user + $jumlah_benar_pre_test;
+        $post_test = getPostTest($id_bab);
+        $jumlah_post_test = jumlahPostTest($id_bab)->count() * 10;
+        $log_post_test = logPostTest($id_bab, $userId);
+        $jumlah_benar_post_test = logPostTest($id_bab, $userId)->where('is_benar', 1)->count() * 10;
+
+        $total_point_user = $membaca_user + $menonton_yt_user + $tugas_user + $jumlah_benar_pre_test + $jumlah_benar_post_test;
 
         return view('pages.mahasiswa.sub_bab.index', 
-        compact('datas', 'bab', 'total_point', 'total_point_user', 
-                'pre_test','jumlah_pre_test', 'log_pre_test', 'jumlah_benar_pre_test'));
+        compact('datas', 'bab','logBabUser', 'total_point', 'total_point_user', 
+                'pre_test','jumlah_pre_test', 'log_pre_test', 'jumlah_benar_pre_test',
+                'post_test','jumlah_post_test', 'log_post_test', 'jumlah_benar_post_test'));
     }
 
     public function baca($id_bab, $id){
