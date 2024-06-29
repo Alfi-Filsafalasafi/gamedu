@@ -24,3 +24,11 @@
         <span>Kuis</span>
     </a>
 </li>
+
+<li class="nav-heading">Tugas Materi</li>
+<li class="nav-item">
+    <a class="@yield('tugas')" href="{{ route('dosen.quiz.index') }}">
+        <i class="bi bi-clipboard"></i>
+        <span>Tugas</span>
+    </a>
+</li>

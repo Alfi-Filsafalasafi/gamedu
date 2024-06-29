@@ -3,6 +3,7 @@
 @section('dashboard', 'nav-link collapsed')
 @section('materi', 'nav-link collapsed')
 @section('kuis', 'nav-link')
+@section('tugas', 'nav-link collapsed')
 @section('content')
     @include('sweetalert::alert')
 
