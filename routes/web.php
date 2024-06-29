@@ -8,6 +8,8 @@ use App\Http\Controllers\Mahasiswa\HomeMahasiswaController;
 use App\Http\Controllers\Mahasiswa\BabMahasiswaController;
 use App\Http\Controllers\Mahasiswa\SubBabMahasiswaController;
 use App\Http\Controllers\Mahasiswa\QuizMahasiswaController;
+use App\Http\Controllers\Mahasiswa\PeringkatController;
+use App\Http\Controllers\Mahasiswa\GamesMahasiswaController;
 
 use App\Http\Controllers\Dosen\HomeDosenController;
 use App\Http\Controllers\Dosen\BabDosenController;
@@ -45,6 +47,16 @@ Route::prefix('profile')->name('profile.')->group(function(){
 Route::middleware(['role:mahasiswa'])->group(function () {
     Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
         Route::get('/', [HomeMahasiswaController::class, 'index'])->name('index');
+
+        Route::prefix('peringkat')->name('peringkat.')->group(function () {
+            Route::get('/', [PeringkatController::class, 'index'])->name('index');
+
+        });
+
+        Route::prefix('games')->name('games.')->group(function (){
+            Route::get('/', [GamesMahasiswaController::class, 'index'])->name('index');
+        });
+
 
         Route::prefix('bab')->name('bab.')->group(function () {
             Route::get('/', [BabMahasiswaController::class, 'index'])->name('index');

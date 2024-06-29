@@ -19,6 +19,20 @@ use Illuminate\Support\Facades\Auth;
 class PeringkatController extends Controller
 {
     //
+    public function index(){
+        $datas = $this->calculateRank();
+        $id_user = Auth::id(); // Mendapatkan ID pengguna yang sedang login
+        $user = User::findOrFail($id_user);
+        $userRank = null;
+        foreach ($datas as $index => $data) {
+            if ($data->id == $id_user) {
+                $userRank = $index + 1; // Karena index dimulai dari 0, tambahkan 1 untuk mendapatkan peringkat sebenarnya
+                break;
+            }
+        }
+        $jumlahUser = $datas->count();
+        return view('pages.mahasiswa.peringkat', compact('datas', 'userRank', 'jumlahUser'));
+    }
     public static function calculateRank(){
         $id_user = Auth::id();
         $user = User::findOrFail($id_user);
@@ -34,17 +48,29 @@ class PeringkatController extends Controller
 
         $combinedPoints = $combinedPoints->sortByDesc('total_points')->values();
 
-        return $pointLogSubBab;
+        // Mendapatkan peringkat pengguna yang sedang login
+        $userRank = $combinedPoints->search(function($item) use ($id_user) {
+            return $item->id == $id_user;
+        });
+
+        // Jika pengguna ditemukan, tambahkan informasi peringkat ke objek pengguna
+        if ($userRank !== false) {
+            $user->rank = $userRank + 1; // Karena array dimulai dari indeks 0, tambahkan 1 untuk mendapatkan peringkat sebenarnya
+        } else {
+            $user->rank = null; // Pengguna tidak ditemukan dalam peringkat
+        }
+
+        return $combinedPoints;
 
     }
 
 
     protected function pointLogSubBab(){
        $pointLogSubBab = User::leftJoin('log_sub_bab_users', 'users.id', '=', 'log_sub_bab_users.id_user')
-       ->select('users.id', 'users.name', 'users.role',
+       ->select('users.id', 'users.name', 'users.role', 'users.photo', 'users.prodi',
        DB::raw('SUM(COALESCE(log_sub_bab_users.point_tugas, 0) + COALESCE(log_sub_bab_users.point_membaca, 0) + COALESCE(log_sub_bab_users.point_menonton_yt, 0)) as total_points'))
        ->where('users.role', 'mahasiswa')
-       ->groupBy('users.id', 'users.name', 'users.role')
+       ->groupBy('users.id', 'users.name', 'users.role', 'users.photo', 'users.prodi',)
        ->orderBy('total_points', 'desc')
        ->get();
         
@@ -53,9 +79,10 @@ class PeringkatController extends Controller
 
     protected function pointQuiz(){
         $pointQuiz =  User::leftJoin('quiz_pengumpulans', 'users.id', '=', 'quiz_pengumpulans.id_user')
-        ->select('users.id', 'users.name', 'users.role', DB::raw('COUNT(CASE WHEN quiz_pengumpulans.is_benar = 1 THEN 1 END) * 10 AS total_points'))
+        ->select('users.id', 'users.name', 'users.role', 'users.photo', 'users.prodi',
+         DB::raw('COUNT(CASE WHEN quiz_pengumpulans.is_benar = 1 THEN 1 END) * 10 AS total_points'))
         ->where('users.role', 'mahasiswa')
-        ->groupBy('users.id', 'users.name', 'users.role')
+        ->groupBy('users.id', 'users.name', 'users.role', 'users.photo', 'users.prodi',)
         ->orderBy('total_points', 'desc')
          ->get();
          

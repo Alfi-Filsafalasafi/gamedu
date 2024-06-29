@@ -21,7 +21,7 @@
 <li class="nav-heading">Bonus</li>
 
 <li class="nav-item">
-    <a class="@yield('games')" href="">
+    <a class="@yield('games')" href="{{ route('mahasiswa.games.index') }}">
         <i class="bi bi-joystick"></i>
         <span>Games</span>
     </a>
@@ -30,7 +30,7 @@
 <li class="nav-heading">Pendukung</li>
 
 <li class="nav-item">
-    <a class="@yield('peringkat')" href="">
+    <a class="@yield('peringkat')" href="{{ route('mahasiswa.peringkat.index') }}">
         <i class="bi bi-trophy"></i>
         <span>Peringkat</span>
     </a>
