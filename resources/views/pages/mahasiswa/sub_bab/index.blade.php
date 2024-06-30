@@ -96,7 +96,7 @@
                                         <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 20px"></i>
                                         <span class="" style="font-size: 16px"><b> 0 </b>
                                             /
-                                            {{ $jumlah_pre_test * 10 }}</span>
+                                            {{ $jumlah_pre_test }}</span>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -179,6 +179,9 @@
                                                     </button>
                                                 </form>
                                             @else
+                                                @if ($data->jumlah_revisi > 0)
+                                                    <span class="badge bg-warning me-3">{{ $data->jumlah_revisi }}</span>
+                                                @endif
                                                 <a href="{{ route('mahasiswa.sub_bab.baca', ['id_bab' => $data->id_bab, 'id' => $data->id]) }}"
                                                     class="btn btn-sm btn-outline-primary">Baca Materi</a>
                                             @endif
@@ -286,7 +289,7 @@
                                         <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 20px"></i>
                                         <span class="" style="font-size: 16px"><b> 0 </b>
                                             /
-                                            {{ $jumlah_post_test * 10 }}</span>
+                                            {{ $jumlah_post_test }}</span>
                                     </div>
                                 </div>
                                 <div class="card-body">

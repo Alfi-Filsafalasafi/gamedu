@@ -16,6 +16,7 @@ use App\Http\Controllers\Dosen\BabDosenController;
 use App\Http\Controllers\Dosen\QuizDosenController;
 use App\Http\Controllers\Dosen\SubBabDosenController;
 use App\Http\Controllers\Dosen\SubQuizDosenController;
+use App\Http\Controllers\Dosen\TugasDosenController;
 
 use App\Http\Controllers\Admin\HomeAdminController;
 use App\Http\Controllers\Admin\UserAdminController;
@@ -121,6 +122,14 @@ Route::middleware(['role:dosen'])->group(function () {
             Route::get('/edit/{id}', [SubQuizDosenController::class, 'edit'])->name('edit');
             Route::patch('/update/{id}', [SubQuizDosenController::class, 'update'])->name('update');
             Route::delete('/delete/{id}', [SubQuizDosenController::class, 'delete'])->name('delete');
+        });
+
+        Route::prefix('tugas')->name('tugas.')->group(function () {
+            Route::get('/materi', [TugasDosenController::class, 'bab'])->name('bab');
+            Route::get('/materi/{id_bab}', [TugasDosenController::class, 'sub_bab'])->name('sub_bab');
+            Route::get('/materi/{id_bab}/pengumpulan/{id}', [TugasDosenController::class, 'pengumpulan'])->name('pengumpulan');
+            Route::get('/materi/{id_bab}/pengumpulan/{id_sub_bab}/respon/{id}', [TugasDosenController::class, 'respon'])->name('respon');
+            Route::post('/materi/submit/respon/{id}', [TugasDosenController::class, 'submitRespon'])->name('submitRespon');
         });
 
     });

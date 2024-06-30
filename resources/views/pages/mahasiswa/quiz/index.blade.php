@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="row flex-grow mt-3">
-                    <form method="POST"
+                    <form method="POST" id="formQuiz"
                         action="{{ route('mahasiswa.quiz.submitJawaban', ['id_bab' => $quiz->bab->id, 'id' => $quiz->id]) }}">
                         @csrf
 
@@ -94,7 +94,8 @@
                         @endforeach
 
                         <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-sm btn-outline-primary btn-fw">Submit</button>
+                            <button id="submitBtn" type="submit"
+                                class="btn btn-sm btn-outline-primary btn-fw">Submit</button>
                         </div>
                     </form>
 
@@ -111,4 +112,11 @@
 @endsection
 
 @section('scripts')
+    <script>
+        document.getElementById('formQuiz').addEventListener('submit', function() {
+            var submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Loading...'; // Mengubah teks tombol menjadi 'Loading...'
+        });
+    </script>
 @endsection

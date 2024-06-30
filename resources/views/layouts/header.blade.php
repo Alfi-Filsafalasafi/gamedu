@@ -10,6 +10,50 @@
 
     <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
+            <li class="nav-item dropdown">
+                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                    <i class="bi bi-bell"></i>
+                    @if (auth()->user()->role == 'mahasiswa')
+                        @if (isset($jumlahRevisi) && $jumlahRevisi > 0)
+                            <span class="badge bg-warning badge-number">{{ $jumlahRevisi }}</span>
+                        @endif
+                    @elseif (auth()->user()->role == 'dosen')
+                        @if (isset($jumlahTugas) && $jumlahTugas > 0)
+                            <span class="badge bg-primary badge-number">{{ $jumlahTugas }}</span>
+                        @endif
+                    @endif
+                </a><!-- End Notification Icon -->
+
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                    <li class="dropdown-header">
+                        @if (auth()->user()->role == 'mahasiswa')
+                            @if (isset($jumlahRevisi) && $jumlahRevisi > 0)
+                                Kamu memiliki {{ $jumlahRevisi }} tugas yang harus di revisi
+                                <a href="{{ route('mahasiswa.bab.index') }}">
+                                    <span class="badge rounded-pill bg-primary p-2 ms-2">
+                                        View all
+                                    </span>
+                                </a>
+                            @else
+                                Tidak ada notifikasi
+                            @endif
+                        @elseif (auth()->user()->role == 'dosen')
+                            @if (isset($jumlahTugas) && $jumlahTugas > 0)
+                                Kamu memiliki {{ $jumlahTugas }} tugas yang harus di proses
+                                <a href="{{ route('dosen.tugas.bab') }}">
+                                    <span class="badge rounded-pill bg-primary p-2 ms-2">
+                                        View all
+                                    </span>
+                                </a>
+                            @else
+                                Tidak ada notifikasi
+                            @endif
+                        @endif
+
+                    </li>
+                </ul>
+                <!-- End Notification Dropdown Items -->
+            </li>
 
             @if (auth()->user()->role == 'mahasiswa')
                 <li class="nav-item dropdown me-4 d-flex align-items-center">

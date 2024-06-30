@@ -70,6 +70,9 @@
                                                 </button>
                                             </form>
                                         @else
+                                            @if ($data->jumlah_revisi > 0)
+                                                <span class="badge bg-warning me-3">{{ $data->jumlah_revisi }}</span>
+                                            @endif
                                             <a href="{{ route('mahasiswa.sub_bab.index', ['id_bab' => $data->id]) }}"
                                                 class="btn btn-sm btn-outline-primary">Akses Materi</a>
                                         @endif

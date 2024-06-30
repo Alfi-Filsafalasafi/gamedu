@@ -15,6 +15,9 @@
     <a class="@yield('materi')" href="{{ route('mahasiswa.bab.index') }}">
         <i class="bi bi-book"></i>
         <span>Materi</span>
+        @if (isset($jumlahRevisi) && $jumlahRevisi > 0)
+            <span class=" ms-1 badge bg-warning">{{ $jumlahRevisi }}</span>
+        @endif
     </a>
 </li>
 

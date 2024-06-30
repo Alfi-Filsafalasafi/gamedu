@@ -15,21 +15,26 @@ use App\Models\QuizPengumpulan;
 use Illuminate\Support\Facades\Auth;
 use File;
 
-function getSubBabWithStatus($id_bab, $id_user) {
+function getSubBabWithStatus($id_bab, $userId) {
     $subBabs = SubBab::where('id_bab', $id_bab)->get();
 
-    $logSubBabs = LogSubBabUser::where('id_user', $id_user)
+    $logSubBabs = LogSubBabUser::where('id_user', $userId)
         ->whereIn('id_sub_bab', $subBabs->pluck('id'))
         ->get()
-        ->keyBy('id_sub_bab');
+        ->groupBy('id_sub_bab');
 
     $subBabsWithStatus = $subBabs->map(function ($subBab) use ($logSubBabs) {
         $log = $logSubBabs->get($subBab->id);
-        $subBab->status = $log ? $log->status : 'belumAda';
-        $subBab->log_point_membaca = $log ? $log->point_membaca : 0;
-        $subBab->log_point_menonton_yt = $log ? $log->point_menonton_yt : 0;
-        $subBab->log_point_tugas = $log ? $log->point_tugas : 0;
+        
+        $subBab->status = $log ? $log->first()->status : 'belumAda';
+        $subBab->log_point_membaca = $log ? $log->first()->point_membaca : 0;
+        $subBab->log_point_menonton_yt = $log ? $log->first()->point_menonton_yt : 0;
+        $subBab->log_point_tugas = $log ? $log->first()->point_tugas : 0;
+        $subBab->jumlah_revisi = $log ? $log->where('status_tugas', 'revisi')->count() : 0;
+
+    
         $subBab->log_point_user =  $subBab->log_point_membaca +  $subBab->log_point_menonton_yt + $subBab->log_point_tugas; 
+
         return $subBab;
     });
 
@@ -87,6 +92,7 @@ class SubBabMahasiswaController extends Controller
         }
         // $datas = SubBab::where('id_bab', $id_bab)->orderBy('index', 'asc')->get();
         $datas = getSubBabWithStatus($id_bab, $userId);
+        // dd($datas);
         $openPostTest = true;
         foreach ($datas as $data) {
             if ($data->status !== 'selesai') {
@@ -217,6 +223,10 @@ class SubBabMahasiswaController extends Controller
     }
 
     public function pengumpulanTugas(Request $request, $id_bab, $id){
+        if($request->file_tugas == null){
+            alert()->error('Gagal','File tidak boleh kosong');
+            return back();            
+        }
         try {
             $userId = auth()->id(); // Mengambil ID user yang sedang login
             $log_sub_bab = LogSubBabUser::where('id_bab', $id_bab)

@@ -14,4 +14,8 @@ class Bab extends Model
     {
         return $this->hasMany(SubBab::class, 'id_bab');
     }
+    public function logSubBabUsers()
+    {
+        return $this->hasMany(LogSubBabUser::class, 'id_bab', 'id');
+    }
 }

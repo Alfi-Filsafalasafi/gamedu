@@ -15,6 +15,11 @@ class LogSubBabUser extends Model
         return $this->belongsTo(User::class, 'id_user');
     }
 
+    public function bab()
+    {
+        return $this->belongsTo(Bab::class, 'id_bab');
+    }
+
     public function subBab() {
         return $this->belongsTo(SubBab::class, 'id_sub_bab');
     }

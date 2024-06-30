@@ -29,6 +29,7 @@ function getBabWithStatus()
         ->whereIn('id_bab', $babs->pluck('id'))
         ->get()
         ->groupBy('id_bab');
+        
     $quizPengumpulans = Quiz::whereIn('id_bab', $babs->pluck('id'))
         ->with(['quizPengumpulan' => function($query) use ($id_user) {
             $query->where('id_user', $id_user)->where('is_benar', 1);
@@ -44,6 +45,9 @@ function getBabWithStatus()
             $bab->total_point_membaca = $logSubBab ? $logSubBab->sum('point_membaca') : 0;
             $bab->total_point_menonton_yt = $logSubBab ? $logSubBab->sum('point_menonton_yt') : 0; 
             $bab->total_point_tugas = $logSubBab ? $logSubBab->sum('point_tugas') : 0;
+
+            $bab->jumlah_revisi = $logSubBab ? $logSubBab->where('status_tugas', 'revisi')->count() : 0;
+
 
             $quizPengumpulan = $quizPengumpulans->get($bab->id);
             $total_quiz_benar = 0;
