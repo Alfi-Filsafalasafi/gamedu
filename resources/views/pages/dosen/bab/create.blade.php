@@ -50,10 +50,6 @@
                                 <input type="text" name="durasi" class="form-control" id="durasi"
                                     value="{{ old('durasi') }}" placeholder="contoh: 1 pertemuan pertemuan ke-3" required>
                             </div>
-                            <div class="col-md-12">
-                                <label for="deskripsi" class="form-label">Deskripsi</label>
-                                <textarea name="deskripsi" class="form-control" id="deskripsi" cols="30" rows="3" required></textarea>
-                            </div>
                             <div class="col-lg-12">
                                 <label id="capaian_pembelajaran" class="form-label">Capaian Pembelajaran</label>
 

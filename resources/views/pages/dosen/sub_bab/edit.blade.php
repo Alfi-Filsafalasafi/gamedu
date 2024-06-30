@@ -61,6 +61,13 @@
                                 <textarea class="tinymce-editor" id="uraian_tugas" name="uraian_tugas">{{ old('uraian_tugas', $data->uraian_tugas) }}</textarea><!-- End TinyMCE Editor -->
 
                             </div>
+                            <div class="col-lg-12">
+                                <label for="rublik_penilaian" class="form-label">Rublik Penilaian</label>
+
+                                <!-- TinyMCE Editor -->
+                                <textarea class="tinymce-editor" id="rublik_penilaian" name="rublik_penilaian">{{ old('rublik_penilaian', $data->rublik_penilaian) }}</textarea><!-- End TinyMCE Editor -->
+
+                            </div>
                             <div class="col-md-12">
                                 <label for="link_yt" class="form-label">Link Youtube Embed <small
                                         class="text-success">*opsional</small></label>
@@ -87,7 +94,9 @@
                                     id="point_tugas" value="{{ old('point_tugas', $data->point_tugas) }}" required>
                             </div>
                             <hr>
-                            <div class="row mt-3">
+                            <div class="row mt-1">
+                                <small class="text-secondary mb-2">Anda dapat mempertimbangkan dari jumlah point membaca +
+                                    menonton yt + tugas</small>
                                 <label for="bintang_1" class="col-sm-4 col-md-2 col-form-label">Bintang 1</label>
                                 <div class="col-sm-8 col-md-6">
                                     <input type="number" min="0" name="bintang_1" id="bintang_1"

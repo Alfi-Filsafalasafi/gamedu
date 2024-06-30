@@ -38,7 +38,6 @@
                                         <th>Beli</th>
                                         <th>Nama</th>
                                         <th>Durasi</th>
-                                        <th>Deskripsi</th>
                                         <th>CP</th>
                                     </tr>
                                 </thead>
@@ -59,7 +58,6 @@
                                             <td>{{ $data->beli_point ?? 0 }} poin</td>
                                             <td>{{ $data->nama }}</td>
                                             <td>{{ $data->durasi }}</td>
-                                            <td>{{ $data->deskripsi }}</td>
                                             <td>
                                                 <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal"
                                                     data-bs-target="#modalCP{{ $data->id }}">

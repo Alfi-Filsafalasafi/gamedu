@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('nama')->nullable();
             $table->string('durasi')->nullable();
             $table->longText('capaian_pembelajaran')->nullable();
-            $table->longText('deskripsi')->nullable();
             $table->timestamps();
         });
     }

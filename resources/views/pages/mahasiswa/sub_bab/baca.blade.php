@@ -4,7 +4,31 @@
 @section('materi', 'nav-link ')
 @section('games', 'nav-link collapsed')
 @section('peringkat', 'nav-link collapsed')
+@section('style')
+    <style>
+        .content img {
+            width: 100%;
+            height: auto;
+        }
 
+        /* Untuk layar medium (768px - 992px) */
+        @media (min-width: 768px) and (max-width: 992px) {
+            .content img {
+                width: 80%;
+                height: auto;
+            }
+        }
+
+        /* Untuk layar besar (> 992px) */
+        @media (min-width: 992px) {
+            .content img {
+                width: 75%;
+                height: auto;
+
+            }
+        }
+    </style>
+@endsection
 @section('content')
     @include('sweetalert::alert')
 
@@ -45,7 +69,9 @@
                                     {{ $data->point_membaca }} </span>
                             </div>
                         </div>
-                        {!! $data->content !!}
+                        <div class="content">
+                            {!! $data->content !!}
+                        </div>
 
                         <div class="d-flex justify-content-end">
                             @if ($logSubBabUser->point_membaca == null || $logSubBabUser->point_membaca == 0)
@@ -111,73 +137,97 @@
                 @endif
             </div>
             <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body mt-3">
-                        <div class="mb-2">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <strong>Tugas</strong>
-                                <div class="d-flex align-items-center">
-                                    <i class="ri-copper-coin-fill" style="color:#ffd700; font-size:24px"></i>
-                                    <span class="ms-2 mb-0"> <b>{{ $logSubBabUser->point_tugas ?? 0 }} </b> /
-                                        {{ $data->point_tugas }}</span>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body mt-3">
+                                <div class="mb-2">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <strong>Tugas</strong>
+                                        <div class="d-flex align-items-center">
+                                            <i class="ri-copper-coin-fill" style="color:#ffd700; font-size:24px"></i>
+                                            <span class="ms-2 mb-0"> <b>{{ $logSubBabUser->point_tugas ?? 0 }} </b> /
+                                                {{ $data->point_tugas }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    {!! $data->uraian_tugas !!}
+                                </div>
+                                @if ($logSubBabUser->status_tugas == '')
+                                    <small><b>Pengumpulan tugas</b></small>
+
+                                    <form class="needs-validation"
+                                        action="{{ route('mahasiswa.sub_bab.pengumpulanTugas', ['id_bab' => $bab->id, 'id' => $data->id]) }}"
+                                        method="POST" id="pengumpulanTugasForm" enctype="multipart/form-data" novalidate>
+                                        @csrf
+                                        @method('PATCH')
+                                        <input class="form-control mt-2" name="file_tugas" type="file" id="formFile"
+                                            required />
+                                        <button type="button" class="btn btn-sm btn-primary w-100 btn-fw mt-2"
+                                            id="tugasId" onclick="pengumpulanTugas()">Submit</button>
+                                    </form>
+                                @elseif($logSubBabUser->status_tugas == 'submit')
+                                    <small>file tugas anda</small> <br>
+                                    <a
+                                        href="{{ asset($logSubBabUser->file_tugas) }}">{{ basename($logSubBabUser->file_tugas) }}</a>
+                                    <div class="alert alert-info mt-2" role="alert">
+                                        <i class="bi bi-info-circle me-1"></i>
+                                        <small>Tugas anda akan direview oleh dosen, silahkan ditunggu</small>
+                                    </div>
+                                @elseif($logSubBabUser->status_tugas == 'revisi')
+                                    <small>file tugas anda</small> <br>
+                                    <a
+                                        href="{{ asset($logSubBabUser->file_tugas) }}">{{ basename($logSubBabUser->file_tugas) }}</a>
+                                    <div class="alert alert-warning mt-2" role="alert">
+                                        <i class="bi bi-exclamation-triangle me-1"></i>
+                                        <small>Anda harus merevisi tugas dan mengumpulkan hasil revisian</small>
+                                    </div>
+                                    <div class="alert alert-warning mt-2" role="alert">
+                                        <small><b>Catatan dosen :</b>
+                                            {!! $logSubBabUser->catatan_tugas !!}
+                                        </small>
+                                    </div>
+                                    <small><b>Pengumpulan tugas hasil revisi</b></small>
+
+                                    <form class="needs-validation"
+                                        action="{{ route('mahasiswa.sub_bab.pengumpulanTugas', ['id_bab' => $bab->id, 'id' => $data->id]) }}"
+                                        method="POST" id="pengumpulanTugasForm" enctype="multipart/form-data"
+                                        novalidate>
+                                        @csrf
+                                        @method('PATCH')
+                                        <input class="form-control mt-2" name="file_tugas" type="file" id="formFile"
+                                            required />
+                                        <button type="button" class="btn btn-sm btn-primary w-100 btn-fw mt-2"
+                                            id="tugasId" onclick="pengumpulanTugas()">Submit</button>
+                                    </form>
+                                @elseif($logSubBabUser->status_tugas == 'selesai')
+                                    <small>file tugas anda</small> <br>
+                                    <a
+                                        href="{{ asset($logSubBabUser->file_tugas) }}">{{ basename($logSubBabUser->file_tugas) }}</a>
+                                    <div class="alert alert-success mt-2" role="alert">
+                                        <i class="bi bi-check-circle me-1"></i>
+                                        <small>Tugas anda telah diterima dan nilai oleh dosen</small>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body mt-3">
+                                <div class="mb-2">
+                                    <strong>Rublik Penilaian</strong>
+                                </div>
+                                <div class="tugas">
+                                    @if ($data->rublik_penilaian == null)
+                                        Tidak ada
+                                    @else
+                                        {!! $data->rublik_penilaian !!}
+                                    @endif
                                 </div>
                             </div>
                         </div>
-                        {!! $data->uraian_tugas !!}
-                        @if ($logSubBabUser->status_tugas == '')
-                            <small><b>Pengumpulan tugas</b></small>
-
-                            <form class="needs-validation"
-                                action="{{ route('mahasiswa.sub_bab.pengumpulanTugas', ['id_bab' => $bab->id, 'id' => $data->id]) }}"
-                                method="POST" id="pengumpulanTugasForm" enctype="multipart/form-data" novalidate>
-                                @csrf
-                                @method('PATCH')
-                                <input class="form-control mt-2" name="file_tugas" type="file" id="formFile" required />
-                                <button type="button" class="btn btn-sm btn-primary w-100 btn-fw mt-2" id="tugasId"
-                                    onclick="pengumpulanTugas()">Submit</button>
-                            </form>
-                        @elseif($logSubBabUser->status_tugas == 'submit')
-                            <small>file tugas anda</small> <br>
-                            <a
-                                href="{{ asset($logSubBabUser->file_tugas) }}">{{ basename($logSubBabUser->file_tugas) }}</a>
-                            <div class="alert alert-info mt-2" role="alert">
-                                <i class="bi bi-info-circle me-1"></i>
-                                <small>Tugas anda akan direview oleh dosen, silahkan ditunggu</small>
-                            </div>
-                        @elseif($logSubBabUser->status_tugas == 'revisi')
-                            <small>file tugas anda</small> <br>
-                            <a
-                                href="{{ asset($logSubBabUser->file_tugas) }}">{{ basename($logSubBabUser->file_tugas) }}</a>
-                            <div class="alert alert-warning mt-2" role="alert">
-                                <i class="bi bi-exclamation-triangle me-1"></i>
-                                <small>Anda harus merevisi tugas dan mengumpulkan hasil revisian</small>
-                            </div>
-                            <div class="alert alert-warning mt-2" role="alert">
-                                <small><b>Catatan dosen :</b>
-                                    {!! $logSubBabUser->catatan_tugas !!}
-                                </small>
-                            </div>
-                            <small><b>Pengumpulan tugas hasil revisi</b></small>
-
-                            <form class="needs-validation"
-                                action="{{ route('mahasiswa.sub_bab.pengumpulanTugas', ['id_bab' => $bab->id, 'id' => $data->id]) }}"
-                                method="POST" id="pengumpulanTugasForm" enctype="multipart/form-data" novalidate>
-                                @csrf
-                                @method('PATCH')
-                                <input class="form-control mt-2" name="file_tugas" type="file" id="formFile"
-                                    required />
-                                <button type="button" class="btn btn-sm btn-primary w-100 btn-fw mt-2" id="tugasId"
-                                    onclick="pengumpulanTugas()">Submit</button>
-                            </form>
-                        @elseif($logSubBabUser->status_tugas == 'selesai')
-                            <small>file tugas anda</small> <br>
-                            <a
-                                href="{{ asset($logSubBabUser->file_tugas) }}">{{ basename($logSubBabUser->file_tugas) }}</a>
-                            <div class="alert alert-success mt-2" role="alert">
-                                <i class="bi bi-check-circle me-1"></i>
-                                <small>Tugas anda telah diterima dan nilai oleh dosen</small>
-                            </div>
-                        @endif
                     </div>
                 </div>
             </div>

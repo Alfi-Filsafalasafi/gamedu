@@ -8,7 +8,7 @@
 @section('content')
 
     <div class="pagetitle">
-        <h1>Edit Bab Materi</h1>
+        <h1>Manajemen Materi</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dosen.index') }}">Home</a></li>
@@ -23,7 +23,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Edit Bab Materi</h5>
+                        <h5 class="card-title">Edit Bab </h5>
 
                         <!-- Custom Styled Validation -->
                         <form action="{{ route('dosen.bab.update', ['id' => $data->id]) }}" method="POST"
@@ -54,10 +54,6 @@
                                 <input type="text" name="durasi" class="form-control" id="durasi"
                                     value="{{ old('durasi', $data->durasi) }}"
                                     placeholder="contoh: 1 pertemuan pertemuan ke-3" required>
-                            </div>
-                            <div class="col-md-12">
-                                <label for="deskripsi" class="form-label">Deskripsi</label>
-                                <textarea name="deskripsi" class="form-control" id="deskripsi" cols="30" rows="3" required>{{ old('deskripsi', $data->deskripsi) }}</textarea>
                             </div>
                             <div class="col-lg-12">
                                 <label id="capaian_pembelajaran" class="form-label">Capaian Pembelajaran</label>

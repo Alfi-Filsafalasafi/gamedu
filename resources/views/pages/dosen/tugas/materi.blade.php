@@ -22,7 +22,7 @@
                 <p>Berikut adalah materi-materi yang tersaji, silahkan pantau perkembangan mahasiswa anda</p>
             </div>
             <div class="col-lg-12">
-                <div class="row justify-content-between">
+                <div class="row">
                     @foreach ($datas as $data)
                         <div class="col-md-6 col-lg-4">
                             <div class="card">

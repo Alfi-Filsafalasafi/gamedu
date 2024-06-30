@@ -4,6 +4,46 @@
 @section('materi', 'nav-link ')
 @section('kuis', 'nav-link collapsed')
 @section('tugas', 'nav-link collapsed')
+@section('style')
+    <style>
+        .content img {
+            width: 100%;
+            height: auto;
+        }
+
+        .tugas img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Untuk layar medium (768px - 992px) */
+        @media (min-width: 768px) and (max-width: 992px) {
+            .content img {
+                width: 80%;
+                height: auto;
+            }
+
+            .tugas img {
+                width: 70%;
+                height: auto;
+            }
+        }
+
+        /* Untuk layar besar (> 992px) */
+        @media (min-width: 992px) {
+            .content img {
+                width: 75%;
+                height: auto;
+
+            }
+
+            .tugas img {
+                width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+@endsection
 
 @section('content')
     @include('sweetalert::alert')
@@ -31,7 +71,9 @@
                                     <strong class="ms-2 mb-0">{{ $data->point_membaca }}</strong>
                                 </div>
                             </div>
-                            {!! $data->content !!}
+                            <div class="content">
+                                {!! $data->content !!}
+                            </div>
 
 
                         </div>
@@ -57,18 +99,36 @@
                     @endif
                 </div>
                 <div class="col-lg-4">
-                    <div class="card">
-                        <div class="card-body mt-3">
-                            <div class="mb-2">
-                                <div class="d-flex justify-content-between align-items-start">
-                                    <strong>Tugas</strong>
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-copper-coin-fill" style="color:#ffd700; font-size:24px"></i>
-                                        <strong class="ms-2 mb-0">{{ $data->point_tugas }}</strong>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body mt-3">
+                                    <div class="mb-2">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <strong>Tugas</strong>
+                                            <div class="d-flex align-items-center">
+                                                <i class="ri-copper-coin-fill" style="color:#ffd700; font-size:24px"></i>
+                                                <strong class="ms-2 mb-0">{{ $data->point_tugas }}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tugas">
+                                        {!! $data->uraian_tugas !!}
                                     </div>
                                 </div>
                             </div>
-                            {!! $data->uraian_tugas !!}
+                        </div>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body mt-3">
+                                    <div class="mb-2">
+                                        <strong>Rublik Penilaian</strong>
+                                    </div>
+                                    <div class="tugas">
+                                        {!! $data->rublik_penilaian !!}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

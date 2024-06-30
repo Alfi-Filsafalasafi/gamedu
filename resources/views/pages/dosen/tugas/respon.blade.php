@@ -4,6 +4,46 @@
 @section('materi', 'nav-link collapsed')
 @section('kuis', 'nav-link collapsed')
 @section('tugas', 'nav-link')
+@section('style')
+    <style>
+        .content img {
+            width: 100%;
+            height: auto;
+        }
+
+        .tugas img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Untuk layar medium (768px - 992px) */
+        @media (min-width: 768px) and (max-width: 992px) {
+            .content img {
+                width: 80%;
+                height: auto;
+            }
+
+            .tugas img {
+                width: 70%;
+                height: auto;
+            }
+        }
+
+        /* Untuk layar besar (> 992px) */
+        @media (min-width: 992px) {
+            .content img {
+                width: 75%;
+                height: auto;
+
+            }
+
+            .tugas img {
+                width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+@endsection
 @section('content')
     @include('sweetalert::alert')
 
@@ -50,40 +90,56 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-title my-0 pt-3" style="font-size: 14px">Pengumpulan Tugas Mahasiswa</h6>
-                        <div class="d-flex mb-2">Nama <div class="ms-2">:</div> <b
-                                class="ms-3">{{ $data->user->name }}</b>
-                        </div>
-                        <div class="d-flex mb-1">Status <div class="ms-2 me-3">:</div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title my-0 pt-3" style="font-size: 14px">Pengumpulan Tugas Mahasiswa</h6>
+                                <div class="d-flex mb-2">Nama <div class="ms-2">:</div> <b
+                                        class="ms-3">{{ $data->user->name }}</b>
+                                </div>
+                                <div class="d-flex mb-1">Status <div class="ms-2 me-3">:</div>
 
-                            @if ($data->status_tugas == 'selesai')
-                                <span class="badge bg-successs">selesai</span>
-                            @elseif($data->status_tugas == 'submit')
-                                <span class="badge bg-primary">submit</span>
-                            @elseif($data->status_tugas == 'revisi')
-                                <span class="badge bg-warning">revisi</span>
-                            @else
-                                <span class="badge bg-secondary">tidak ada</span>
-                            @endif
-                        </div>
-                        <div class="d-flex">Poin &nbsp;&nbsp; <div class="ms-2 me-3">:</div> {{ $data->point_tugas ?? 0 }}
-                        </div>
+                                    @if ($data->status_tugas == 'selesai')
+                                        <span class="badge bg-successs">selesai</span>
+                                    @elseif($data->status_tugas == 'submit')
+                                        <span class="badge bg-primary">submit</span>
+                                    @elseif($data->status_tugas == 'revisi')
+                                        <span class="badge bg-warning">revisi</span>
+                                    @else
+                                        <span class="badge bg-secondary">tidak ada</span>
+                                    @endif
+                                </div>
+                                <div class="d-flex">Poin &nbsp;&nbsp; <div class="ms-2 me-3">:</div>
+                                    {{ $data->point_tugas ?? 0 }}
+                                </div>
 
-                        <h6 class="card-title my-0 pt-3" style="font-size: 14px">File Tugas</h6>
-                        <a href="{{ asset($data->file_tugas) }}"
-                            class="btn btn-sm btn-primary">{{ basename($data->file_tugas) }}</a>
-                        <div class="alert alert-secondary mt-4" role="alert">
-                            <b>Catatan dosen :</b> <br>
-                            @if ($data->catatan_tugas != '' || $data->catatan_tugas != null)
-                                {!! $data->catatan_tugas !!}
-                            @else
-                                -
-                            @endif
+                                <h6 class="card-title my-0 pt-3" style="font-size: 14px">File Tugas</h6>
+                                <a href="{{ asset($data->file_tugas) }}"
+                                    class="btn btn-sm btn-primary">{{ basename($data->file_tugas) }}</a>
+                                <div class="alert alert-secondary mt-4" role="alert">
+                                    <b>Catatan dosen :</b> <br>
+                                    @if ($data->catatan_tugas != '' || $data->catatan_tugas != null)
+                                        {!! $data->catatan_tugas !!}
+                                    @else
+                                        -
+                                    @endif
+                                </div>
+
+
+                            </div>
                         </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title my-0 pt-3" style="font-size: 14px">Rublik Penilaian</h6>
+                                <div class="tugas">
+                                    {!! $sub_bab->rublik_penilaian !!}
 
-
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

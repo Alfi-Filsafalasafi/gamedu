@@ -19,9 +19,10 @@ return new class extends Migration
             $table->string('nama');
             $table->longText('content')->nullable();
             $table->longText('uraian_tugas')->nullable();
+            $table->longText('rublik_penilaian')->nullable();
             $table->text('link_yt')->nullable();
             $table->float('point_membaca');
-            $table->float('point_menonton_yt');
+            $table->float('point_menonton_yt')->nullable();
             $table->float('point_tugas');
             $table->float('bintang_1');
             $table->float('bintang_2');

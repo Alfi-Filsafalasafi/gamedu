@@ -32,6 +32,7 @@
                 </tbody>
             </table>
         </div>
+        <a href="">Lihat Selengkapnya</a>
 
         <!-- End Default Table Example -->
     </div>

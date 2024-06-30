@@ -113,11 +113,19 @@ class SubBabMahasiswaController extends Controller
         $tugas_user = $datas->sum('log_point_tugas');
 
         $pre_test = getPreTest($id_bab);
+        if($pre_test == null){
+        alert()->error('Gagal','Materi belum siap');
+        return back();
+        }
         $jumlah_pre_test = jumlahPreTest($id_bab)->count() * 10;
         $log_pre_test = logPreTest($id_bab, $userId);
         $jumlah_benar_pre_test = logPreTest($id_bab, $userId)->where('is_benar', 1)->count() * 10;
 
         $post_test = getPostTest($id_bab);
+        if($post_test == null){
+            alert()->error('Gagal','Materi belum siap');
+            return back();
+            }
         $jumlah_post_test = jumlahPostTest($id_bab)->count() * 10;
         $log_post_test = logPostTest($id_bab, $userId);
         $jumlah_benar_post_test = logPostTest($id_bab, $userId)->where('is_benar', 1)->count() * 10;
