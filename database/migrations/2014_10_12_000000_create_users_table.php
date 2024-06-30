@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('angkatan')->nullable();
             $table->enum('role', ['mahasiswa', 'dosen', 'admin'])->nullable();
             $table->text('photo')->nullable();
-            $table->float('uang');
+            $table->float('uang')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
