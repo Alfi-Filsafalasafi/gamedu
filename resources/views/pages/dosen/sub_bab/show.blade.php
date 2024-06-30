@@ -1,9 +1,11 @@
 @extends('layouts.master')
 @section('title', 'Manajemen Materi')
 @section('dashboard', 'nav-link collapsed')
-@section('materi', 'nav-link ')
+@section('materi', 'nav-link')
 @section('kuis', 'nav-link collapsed')
 @section('tugas', 'nav-link collapsed')
+@section('peringkat', 'nav-link collapsed')
+
 @section('style')
     <style>
         .content img {

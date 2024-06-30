@@ -4,6 +4,7 @@
 @section('materi', 'nav-link ')
 @section('kuis', 'nav-link collapsed')
 @section('tugas', 'nav-link collapsed')
+@section('peringkat', 'nav-link collapsed')
 
 @section('content')
 

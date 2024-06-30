@@ -32,7 +32,15 @@
                 </tbody>
             </table>
         </div>
-        <a href="">Lihat Selengkapnya</a>
+        <div class="text-center">
+            @if (auth()->user()->role == 'mahasiswa')
+                <a href="{{ route('mahasiswa.peringkat.index') }}" class="card-title" style="font-size: 14px">Lihat
+                    Selengkapnya</a>
+            @elseif(auth()->user()->role == 'dosen')
+                <a href="{{ route('dosen.peringkat.index') }}" class="card-title" style="font-size: 14px">Lihat
+                    Selengkapnya</a>
+            @endif
+        </div>
 
         <!-- End Default Table Example -->
     </div>

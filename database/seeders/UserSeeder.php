@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
         ]);
         User::create([
             'name' => 'Wahyu Nur Hidayat, S.Pd., M.Pd',
-            'email' => 'wahyu@gmail.com',
+            'email' => 'dosen@gmail.com',
             'role' => 'dosen',
             'password' => bcrypt('password'),
             'jenis_kelamin' => 'L',

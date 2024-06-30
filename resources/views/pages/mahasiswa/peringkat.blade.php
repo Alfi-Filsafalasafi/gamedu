@@ -62,6 +62,7 @@
                                         <th scope="col">Image</th>
                                         <th scope="col">Nama</th>
                                         <th scope="col">Prodi</th>
+                                        <th>Angkatan</th>
                                         <th scope="col">Poin</th>
                                     </tr>
                                 </thead>
@@ -81,6 +82,7 @@
                                                 </td>
                                                 <td>{{ $data->name }}</td>
                                                 <td>{{ $data->prodi }}</td>
+                                                <td>{{ $data->angkatan }}</td>
                                                 <td>{{ $data->total_points }}</td>
                                             </tr>
                                         @else
@@ -97,6 +99,7 @@
                                                 </td>
                                                 <td>{{ $data->name }}</td>
                                                 <td>{{ $data->prodi }}</td>
+                                                <td>{{ $data->angkatan }}</td>
                                                 <td>{{ $data->total_points }}</td>
                                             </tr>
                                         @endif

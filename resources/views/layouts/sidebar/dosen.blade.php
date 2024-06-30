@@ -36,3 +36,11 @@
 
     </a>
 </li>
+<li class="nav-heading">Pendukung</li>
+<li class="nav-item">
+    <a class="@yield('peringkat')" href="{{ route('dosen.peringkat.index') }}">
+        <i class="bi bi-trophy"></i>
+        <span>Peringkat</span>
+
+    </a>
+</li>

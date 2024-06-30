@@ -4,6 +4,8 @@
 @section('materi', 'nav-link collapsed')
 @section('kuis', 'nav-link collapsed')
 @section('tugas', 'nav-link')
+@section('peringkat', 'nav-link collapsed')
+
 @section('style')
     <style>
         .content img {

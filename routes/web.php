@@ -132,6 +132,11 @@ Route::middleware(['role:dosen'])->group(function () {
             Route::post('/materi/submit/respon/{id}', [TugasDosenController::class, 'submitRespon'])->name('submitRespon');
         });
 
+        Route::prefix('peringkat')->name('peringkat.')->group(function () {
+            Route::get('/', [PeringkatController::class, 'indexDosen'])->name('index');
+
+        });
+
     });
 
 });

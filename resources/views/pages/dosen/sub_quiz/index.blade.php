@@ -4,6 +4,7 @@
 @section('materi', 'nav-link collapsed')
 @section('kuis', 'nav-link')
 @section('tugas', 'nav-link collapsed')
+@section('peringkat', 'nav-link collapsed')
 
 @section('content')
     @include('sweetalert::alert')
