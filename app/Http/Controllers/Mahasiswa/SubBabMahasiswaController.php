@@ -101,12 +101,19 @@ class SubBabMahasiswaController extends Controller
             }
         }
 
+
         $bab = Bab::findOrFail($id_bab);
 
         $membaca = SubBab::where('id_bab', $id_bab)->sum('point_membaca');
         $menonton_yt = SubBab::where('id_bab', $id_bab)->sum('point_menonton_yt');
         $tugas = SubBab::where('id_bab', $id_bab)->sum('point_tugas');
-        $total_point = $membaca + $menonton_yt + $tugas;
+        $quiz = Quiz::where('id_bab', $id_bab)
+                ->with('subQuizs')
+                ->get();
+        $quiz = $quiz->sum(function($quiz) {
+            return $quiz->subQuizs->count() * 10;
+        });
+        $total_point = $membaca + $menonton_yt + $tugas + $quiz;
 
         $membaca_user = $datas->sum('log_point_membaca');
         $menonton_yt_user = $datas->sum('log_point_menonton_yt');

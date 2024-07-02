@@ -12,6 +12,7 @@ use App\Models\LogBabUser;
 use App\Models\LogSubBabUser;
 use App\Models\QuizPengumpulan;
 use App\Models\Quiz;
+use App\Models\SubQuiz;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -29,6 +30,11 @@ function getBabWithStatus()
         ->whereIn('id_bab', $babs->pluck('id'))
         ->get()
         ->groupBy('id_bab');
+    $quiz = Quiz::whereIn('id_bab', $babs->pluck('id'))
+        ->with(['subQuizs'])
+        ->get()
+        ->groupBy('id_bab');
+        // dd($quiz);
         
     $quizPengumpulans = Quiz::whereIn('id_bab', $babs->pluck('id'))
         ->with(['quizPengumpulan' => function($query) use ($id_user) {
@@ -37,14 +43,24 @@ function getBabWithStatus()
         ->get()
         ->groupBy('id_bab');
 
-    $babWithStatus = $babs->map(function ($bab) use ($logBabs, $logSubBabs, $quizPengumpulans) {
+    $babWithStatus = $babs->map(function ($bab) use ($logBabs, $logSubBabs, $quiz, $quizPengumpulans) {
             $log = $logBabs->get($bab->id);
             $bab->status = $log ? $log->status : 'belumAda';
 
             $logSubBab = $logSubBabs->get($bab->id);
+            $quiz = $quiz->get($bab->id, collect());
             $bab->total_point_membaca = $logSubBab ? $logSubBab->sum('point_membaca') : 0;
             $bab->total_point_menonton_yt = $logSubBab ? $logSubBab->sum('point_menonton_yt') : 0; 
             $bab->total_point_tugas = $logSubBab ? $logSubBab->sum('point_tugas') : 0;
+
+            // $bab->total_quiz = $quiz ? $quiz->subQuizs->count() : 0;
+            $totalSubQuizzes = $quiz->sum(function($quiz) {
+                return $quiz->subQuizs->count() * 10;
+            });
+        
+            // Assign the total to the bab
+            $bab->total_quiz = $totalSubQuizzes;
+            // $bab->total_quiz = $bab->total_quiz * 10;
 
             $bab->jumlah_revisi = $logSubBab ? $logSubBab->where('status_tugas', 'revisi')->count() : 0;
 
@@ -73,11 +89,13 @@ class BabMahasiswaController extends Controller
     public function index()
     {
         $datas = getBabWithStatus();
+        // dd($datas);
 
         $membaca = SubBab::sum('point_membaca');
         $menonton_yt = SubBab::sum('point_menonton_yt');
         $tugas = SubBab::sum('point_tugas');
-        $total_point = $membaca + $menonton_yt + $tugas;
+        $quiz = SubQuiz::count() * 10 ;
+        $total_point = $membaca + $menonton_yt + $tugas + $quiz;
 
         $id_user = Auth::id();
 

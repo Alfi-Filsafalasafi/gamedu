@@ -40,14 +40,14 @@
                                         <i class="ri-door-open-fill bg-primary text-white px-2 py-1 rounded"
                                             style="font-size: 20px"></i>
                                     @elseif($data->status == 'selesai')
-                                        <i class="ri-check-double-line bg-success text-white px-2 py-1 rounded"
+                                        <i class="ri-check-double-line bg-warning text-white px-2 py-1 rounded"
                                             style="font-size: 20px"></i>
                                     @endif
                                     <div class="d-flex align-items-center me-3">
                                         <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 20px"></i>
                                         <span class=""
                                             style="font-size: 16px"><b>{{ $data->total_point_user ?? 0 }}</b> /
-                                            {{ $data->subBabs->sum('point_membaca') + $data->subBabs->sum('point_menonton_yt') + $data->subBabs->sum('point_tugas') }}</span>
+                                            {{ $data->subBabs->sum('point_membaca') + $data->subBabs->sum('point_menonton_yt') + $data->subBabs->sum('point_tugas') + $data->total_quiz }}</span>
                                     </div>
                                 </div>
                                 <div class="card-body">

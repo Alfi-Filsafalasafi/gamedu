@@ -39,7 +39,7 @@
                             @endif
                         @elseif (auth()->user()->role == 'dosen')
                             @if (isset($jumlahTugas) && $jumlahTugas > 0)
-                                Kamu memiliki {{ $jumlahTugas }} tugas yang harus di proses
+                                Anda memiliki {{ $jumlahTugas }} tugas yang harus di proses
                                 <a href="{{ route('dosen.tugas.bab') }}">
                                     <span class="badge rounded-pill bg-primary p-2 ms-2">
                                         View all

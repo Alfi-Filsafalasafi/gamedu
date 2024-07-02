@@ -7,6 +7,7 @@
 @section('peringkat', 'nav-link collapsed')
 
 @section('content')
+    @include('sweetalert::alert')
 
     <div class="pagetitle">
         <h1>Manajemen Kuis</h1>
@@ -31,9 +32,9 @@
                             novalidate>
                             @csrf
                             <div class="col-md-12">
-                                <label for="id_bab" class="form-label">Role <small class="text-danger">*</small></label>
+                                <label for="id_bab" class="form-label">Bab <small class="text-danger">*</small></label>
                                 <select class="form-select" id="id_bab" name="id_bab"
-                                    aria-label="Default select example">
+                                    aria-label="Default select example" required>
                                     @foreach ($babs as $bab)
                                         <option value="{{ $bab->id }}"
                                             {{ old('id_bab') == $bab->id ? 'selected' : '' }}>

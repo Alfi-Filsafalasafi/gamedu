@@ -39,7 +39,7 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <i class="ri-check-double-line bg-success text-white px-2 py-1 rounded"
+                                    <i class="ri-check-double-line bg-warning text-white px-2 py-1 rounded"
                                         style="font-size: 20px"></i>
                                     @if ($jumlah_benar_pre_test >= $jumlah_pre_test / 1.5)
                                         <div class="d-flex px-2 py-1 bg-emas rounded">
@@ -123,7 +123,7 @@
                                             <i class="ri-door-open-fill bg-primary text-white px-2 py-1 rounded"
                                                 style="font-size: 20px"></i>
                                         @elseif($data->status == 'selesai')
-                                            <i class="ri-check-double-line bg-success text-white px-2 py-1 rounded"
+                                            <i class="ri-check-double-line bg-warning text-white px-2 py-1 rounded"
                                                 style="font-size: 20px"></i>
                                             @if ($data->log_point_user >= $data->bintang_3)
                                                 <div class="d-flex px-2 py-1 bg-emas rounded">
@@ -226,7 +226,7 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <i class="ri-check-double-line bg-success text-white px-2 py-1 rounded"
+                                    <i class="ri-check-double-line bg-warning text-white px-2 py-1 rounded"
                                         style="font-size: 20px"></i>
                                     @if ($jumlah_benar_post_test >= $jumlah_post_test / 1.5)
                                         <div class="d-flex px-2 py-1 bg-emas rounded">

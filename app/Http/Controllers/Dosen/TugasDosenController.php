@@ -44,11 +44,17 @@ class TugasDosenController extends Controller
     public function pengumpulan($id_bab, $id){
         $bab = Bab::findOrFail($id_bab);
         $sub_bab = SubBab::findOrFail($id);
-        $datas = User::leftJoin('log_sub_bab_users', 'users.id', '=', 'log_sub_bab_users.id_user')
-        ->select('users.*', 'log_sub_bab_users.*') 
-        ->where('log_sub_bab_users.id_sub_bab', $id)
+        $datas = User::leftJoin('log_sub_bab_users', function($join) use ($id) {
+            $join->on('users.id', '=', 'log_sub_bab_users.id_user')
+                 ->where('log_sub_bab_users.id_sub_bab', '=', $id)
+                 ->orWhereNull('log_sub_bab_users.id_sub_bab');
+        })
+        ->select('users.*', 'log_sub_bab_users.*')
+        ->where('users.role', 'mahasiswa')
         ->get();
+    
         $total_point = $sub_bab->point_membaca + $sub_bab->point_menonton_yt + $sub_bab->point_tugas;
+        // dd($datas);
 
         return view('pages.dosen.tugas.pengumpulan', compact('datas', 'bab', 'sub_bab', 'total_point'));
     }
@@ -73,11 +79,20 @@ class TugasDosenController extends Controller
             $perubahanPoint = $request->point_tugas - $logSubBabUser->point_tugas;
 
             $logSubBabUser->point_tugas = $request->point_tugas;
+
+            if($request->status_tugas == 'selesai'){
+                $logSubBabUser->status = 'selesai';
+            }else{
+                $logSubBabUser->status = 'progress';
+            }
             $logSubBabUser->save();
 
             $user = User::findOrFail($logSubBabUser->id_user);
             $user->uang = $user->uang + ($perubahanPoint);
             $user->save();
+
+            //update jika tugas diterima
+           
             alert()->success('Hore!','Data berhasil disimpan');
             return redirect()->route('dosen.tugas.pengumpulan',['id_bab' => $logSubBabUser->id_bab, 'id' => $logSubBabUser->id_sub_bab]);
             

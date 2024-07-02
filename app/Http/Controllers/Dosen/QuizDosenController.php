@@ -29,6 +29,11 @@ class QuizDosenController extends Controller
 
     public function store(Request $request){
         try {
+            $check = Quiz::where('id_bab', $request->id_bab)->where('type', $request->type)->first();
+            if($check){
+                alert()->error("data sudah ada");
+                return back();
+            }
             $formData = $request->all();
             Quiz::create($formData);
             alert()->success('Hore!','Data berhasil ditambah');
