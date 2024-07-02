@@ -142,16 +142,14 @@
                                             <p class="small mb-0">Sudah punya akun? <a href="{{ route('login') }}">Log
                                                     in</a></p>
                                         </div>
-                                        <div class="credits">
-                                            Designed by <a href="https://alfi-filsafalasafi.github.io/My/">Alfi
-                                                Filsafalasafi</a>
-                                        </div>
                                     </form>
 
                                 </div>
                             </div>
 
                             <div class="credits">
+                                Designed by <a href="https://alfi-filsafalasafi.github.io/My/">Alfi
+                                    Filsafalasafi</a>
                             </div>
 
                         </div>
