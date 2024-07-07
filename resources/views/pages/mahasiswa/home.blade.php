@@ -5,7 +5,7 @@
 @section('games', 'nav-link collapsed')
 @section('peringkat', 'nav-link collapsed')
 @section('content')
-    @include('sweetalert::alert')
+
 
     <section class="section dashboard">
         <div class="row">
@@ -50,6 +50,8 @@
                     @foreach ($datas as $data)
                         <div class="col-md-6">
                             <div class="card">
+                                <img src="{{ $data->thumbnail != '' ? asset($data->thumbnail) : asset('assets/img/thumbnail-default.jpg') }}"
+                                    class="card-img-top" style="height: 150px; object-fit: cover;" alt="...">
                                 <div class="d-flex justify-content-between align-items-center">
                                     @if ($data->status == 'belumAda')
                                         <i class="ri-lock-fill bg-danger text-white px-2 py-1 rounded"

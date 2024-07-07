@@ -62,11 +62,23 @@
                             <div class="col-md-12">
                                 <label for="role" class="form-label">Role <small class="text-danger">*</small></label>
                                 <select class="form-select" id="role" name="role"
-                                    aria-label="Default select example">
+                                    aria-label="Default select example" onchange="toggleDosenField()">
                                     <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                                     <option value="dosen" {{ old('role') == 'dosen' ? 'selected' : '' }}>Dosen</option>
                                     <option value="mahasiswa" {{ old('role') == 'mahasiswa' ? 'selected' : '' }}>Mahasiswa
                                     </option>
+                                </select>
+                            </div>
+                            <div class="col-md-12" id="dosenField" style="display: none;">
+                                <label for="role" class="form-label">Dosen Anda <small
+                                        class="text-danger">*</small></label>
+                                <select class="form-select" id="id_dosen" name="id_dosen"
+                                    aria-label="Default select example">
+                                    @foreach ($dosens as $dosen)
+                                        <option value="{{ $dosen->id }}"
+                                            {{ old('id_dosen') == $dosen->id ? 'selected' : '' }}>{{ $dosen->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-12">
@@ -80,4 +92,22 @@
             </div>
         </div>
     </section>
+@endsection
+@section('scripts')
+    <script>
+        function toggleDosenField() {
+            var roleSelect = document.getElementById('role');
+            var dosenField = document.getElementById('dosenField');
+            if (roleSelect.value == 'mahasiswa') {
+                dosenField.style.display = 'block';
+            } else {
+                dosenField.style.display = 'none';
+            }
+        }
+
+        // Call the function on page load to set the correct initial state
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleDosenField();
+        });
+    </script>
 @endsection

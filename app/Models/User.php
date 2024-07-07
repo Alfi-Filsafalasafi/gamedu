@@ -27,6 +27,8 @@ class User extends Authenticatable
         'role',
         'photo',
         'uang',
+        'token_dosen',
+        'id_dosen',
     ];
 
     /**
@@ -54,5 +56,8 @@ class User extends Authenticatable
     }
     public function logSubBabUsers() {
         return $this->hasMany(LogSubBabUser::class, 'id_user');
+    }
+    public function dosen(){
+        return $this->belongsTo(User::class, 'id_dosen');
     }
 }

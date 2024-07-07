@@ -6,7 +6,7 @@
 @section('peringkat', 'nav-link collapsed')
 
 @section('content')
-    @include('sweetalert::alert')
+
 
     <section class="">
         <div class="row justify-content-between">
@@ -27,11 +27,18 @@
                     </div>
                 </div>
             </div>
-            <h5>{{ $bab->nama }}</h5>
-            <div class="alert border-primary fade show small pb-0" role="alert">
-                <b>Capaian Pembelajaran</b>
-                {!! $bab->capaian_pembelajaran !!}
-
+            <div class="col-12">
+                <div class="card p-0 mb-1">
+                    <img src="{{ $bab->thumbnail != '' ? asset($bab->thumbnail) : asset('assets/img/thumbnail-default.jpg') }}"
+                        style="height: 150px;object-fit: cover;" class="card-img-top" alt="...">
+                    <div class="card-img-overlay d-flex flex-column justify-content-end">
+                        <h5 class="card-title">{{ $bab->nama }}</h5>
+                    </div>
+                </div>
+                <div class="alert fade show small pb-0 bg-white" role="alert">
+                    <b>Capaian Pembelajaran</b>
+                    {!! $bab->capaian_pembelajaran !!}
+                </div>
             </div>
             <div class="col-lg-8">
                 <div class="row justify-content-between">

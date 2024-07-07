@@ -13,6 +13,7 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
     <!-- ======= Header ======= -->
     @include('layouts.header')
     <!-- End Header -->

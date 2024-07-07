@@ -141,7 +141,7 @@ class SubBabMahasiswaController extends Controller
 
         $total_point_user = $membaca_user + $menonton_yt_user + $tugas_user + $jumlah_benar_pre_test + $jumlah_benar_post_test;
 
-        $peringkats = PeringkatController::calculateRank();
+        $peringkats = PeringkatController::calculateRank(Auth::user()->id_dosen);
 
         return view('pages.mahasiswa.sub_bab.index', 
         compact('datas', 'peringkats', 'bab','logBabUser', 'total_point', 'total_point_user', 

@@ -6,7 +6,7 @@
 @section('peringkat', 'nav-link collapsed')
 
 @section('content')
-    @include('sweetalert::alert')
+
 
     <section class="section dashboard">
         <div class="row justify-content-between">
@@ -32,15 +32,16 @@
                     @foreach ($datas as $data)
                         <div class="col-md-6">
                             <div class="card">
+                                <img src="{{ $data->thumbnail != '' ? asset($data->thumbnail) : asset('assets/img/thumbnail-default.jpg') }}"
+                                    class="card-img-top" style="height: 150px; object-fit: cover;" alt="...">
                                 <div class="d-flex justify-content-between align-items-center">
                                     @if ($data->status == 'belumAda')
-                                        <i class="ri-lock-fill bg-danger text-white px-2 py-1 rounded"
-                                            style="font-size: 20px"></i>
+                                        <i class="ri-lock-fill bg-danger text-white px-2 py-1" style="font-size: 20px"></i>
                                     @elseif($data->status == 'progress')
-                                        <i class="ri-door-open-fill bg-primary text-white px-2 py-1 rounded"
+                                        <i class="ri-door-open-fill bg-primary text-white px-2 py-1"
                                             style="font-size: 20px"></i>
                                     @elseif($data->status == 'selesai')
-                                        <i class="ri-check-double-line bg-warning text-white px-2 py-1 rounded"
+                                        <i class="ri-check-double-line bg-warning text-white px-2 py-1"
                                             style="font-size: 20px"></i>
                                     @endif
                                     <div class="d-flex align-items-center me-3">

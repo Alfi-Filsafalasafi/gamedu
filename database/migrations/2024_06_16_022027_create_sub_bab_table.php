@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('sub_babs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_dosen')->constrained('users')->onDelete('cascade');
             $table->foreignId('id_bab')->constrained('babs')->onDelete('cascade');
             $table->integer('index');
             $table->float('beli_point');

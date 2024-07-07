@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Bab;
 use App\Models\Quiz;
+use Illuminate\Support\Facades\Auth;
 
 class QuizDosenController extends Controller
 {
     
     public function index(){
-        $datas = Quiz::with('bab')->get();
+        $datas = Quiz::with('bab')->where('id_dosen', Auth::id())->get();
         $title = 'Hapus Data!';
         $text = "Apakah kamu yakin menghapus data ini?";
         confirmDelete($title, $text);
@@ -19,7 +20,7 @@ class QuizDosenController extends Controller
     }
 
     public function create(){
-        $babs = Bab::orderBy('index', 'asc')->get();
+        $babs = Bab::where('id_dosen',Auth::id())->orderBy('index', 'asc')->get();
         return view('pages.dosen.quiz.create', compact('babs'));
     }
 
@@ -35,6 +36,7 @@ class QuizDosenController extends Controller
                 return back();
             }
             $formData = $request->all();
+            $formData['id_dosen'] = Auth::id();
             Quiz::create($formData);
             alert()->success('Hore!','Data berhasil ditambah');
             return redirect()->route('dosen.quiz.index');
@@ -46,6 +48,9 @@ class QuizDosenController extends Controller
 
     public function edit($id) {
         $data = Quiz::findOrFail($id);
+        if($data->id_dosen != Auth::id()){
+            return redirect()->route('404');
+        }
         $babs = Bab::orderBy('index', 'asc')->get();
 
         return view('pages.dosen.quiz.edit', compact('data', 'babs'));

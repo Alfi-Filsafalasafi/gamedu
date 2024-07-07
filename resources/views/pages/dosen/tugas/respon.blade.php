@@ -47,7 +47,7 @@
     </style>
 @endsection
 @section('content')
-    @include('sweetalert::alert')
+
 
     <section class="section dashboard">
         <div class="row justify-content-between">

@@ -3,7 +3,7 @@
 @section('dashboard', 'nav-link collapsed')
 @section('user', 'nav-link')
 @section('content')
-    @include('sweetalert::alert')
+
 
     <div class="pagetitle">
         <h1>Manajemen Akun</h1>
@@ -39,6 +39,8 @@
                                         <th>Prodi</th>
                                         <th>Angkatan</th>
                                         <th>Role</th>
+                                        <th>Token Dosen</th>
+                                        <th>Dosen Anda</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,6 +76,8 @@
                                             <td>{{ $data->prodi ? $data->prodi : '-' }}</td>
                                             <td>{{ $data->angkatan ? $data->angkatan : '-' }}</td>
                                             <td>{{ $data->role }}</td>
+                                            <td>{{ $data->token_dosen ?? '-' }}</td>
+                                            <td>{{ $data->dosen->name ?? '-' }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

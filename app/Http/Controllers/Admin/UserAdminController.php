@@ -13,7 +13,7 @@ class UserAdminController extends Controller
 {
     //
     public function index(){
-        $datas = User::all();
+        $datas = User::with('dosen')->get();
         $title = 'Hapus Data!';
         $text = "Apakah kamu yakin menghapus data ini?";
         confirmDelete($title, $text);
@@ -21,7 +21,8 @@ class UserAdminController extends Controller
     }
 
     public function create(){
-        return view('pages.admin.user.create');
+        $dosens = User::where('role', 'dosen')->get();
+        return view('pages.admin.user.create',compact('dosens'));
     }
 
     public function store(Request $request){
@@ -34,6 +35,15 @@ class UserAdminController extends Controller
         try {
             $formData = $request->all();
             $formData['password'] = Hash::make($request->password);
+            if($request->role == 'dosen'){
+                do {
+                    $token = substr(md5(uniqid(mt_rand(), true)), 0, 6);
+                } while (User::where('token_dosen', $token)->exists());
+                $formData['token_dosen'] = $token;
+                $formData['id_dosen'] = '';
+            }elseif($request->role == 'admin'){
+                $formData['id_dosen'] = '';
+            }
             User::create($formData);
             alert()->success('Hore!','Data berhasil ditambah');
             return redirect()->route('admin.user.index');
@@ -45,7 +55,9 @@ class UserAdminController extends Controller
 
     public function edit($id) {
         $user = User::findOrFail($id);
-        return view('pages.admin.user.edit', compact('user'));
+        $dosens = User::where('role', 'dosen')->get();
+
+        return view('pages.admin.user.edit', compact('user', 'dosens'));
     }
     
     public function update(Request $request, $id) {
@@ -63,6 +75,18 @@ class UserAdminController extends Controller
                 $formData['password'] = Hash::make($request->password);
             } else {
                 unset($formData['password']);
+            }
+            if($request->role == 'mahasiswa'){     
+                $formData['token_dosen'] = null;
+            }elseif($request->role == 'dosen'){
+                do {
+                    $token = substr(md5(uniqid(mt_rand(), true)), 0, 6);
+                } while (User::where('token_dosen', $token)->exists());
+                $formData['token_dosen'] = $token;
+                $formData['id_dosen'] = null;
+            }else{
+                $formData['token_dosen'] = null;
+                $formData['id_dosen'] = null;
             }
             $user->update($formData);
             alert()->success('Hore!','Data berhasil diubah');

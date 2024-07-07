@@ -12,6 +12,7 @@
 
 <body>
     <main>
+
         <div class="container">
             <section
                 class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
@@ -122,6 +123,14 @@
                                                 <input id="password-confirm" type="password" class="form-control"
                                                     name="password_confirmation" placeholder="" required />
                                                 <label for="ketikUlangPassword">Ketik Ulang Password</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-floating mb-2">
+                                                <input id="token_dosen" type="text" class="form-control"
+                                                    name="token_dosen" placeholder="" required />
+                                                <label for="token_dosen">Token Dosen</label>
                                             </div>
                                         </div>
 

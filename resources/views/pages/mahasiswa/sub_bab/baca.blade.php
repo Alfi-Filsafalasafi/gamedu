@@ -30,7 +30,7 @@
     </style>
 @endsection
 @section('content')
-    @include('sweetalert::alert')
+
 
     <section class="section">
         <div class="row">

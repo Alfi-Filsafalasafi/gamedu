@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Bab;
 use App\Models\SubBab;
 use App\Helpers\TimeHelper;
+use Illuminate\Support\Facades\Auth;
 
 class SubBabDosenController extends Controller
 {
@@ -14,6 +15,9 @@ class SubBabDosenController extends Controller
     public function index($id_bab){
         $datas = SubBab::where('id_bab', $id_bab)->orderBy('index', 'asc')->get();
         $bab = Bab::findOrFail($id_bab);
+        if($bab->id_dosen != Auth::id()){
+            return redirect()->route('404');
+        }
         $title = 'Hapus Data!';
         $text = "Apakah kamu yakin menghapus data ini?";
         confirmDelete($title, $text);
@@ -22,12 +26,18 @@ class SubBabDosenController extends Controller
 
     public function create($id_bab){
         $bab = Bab::findOrFail($id_bab);
+        if($bab->id_dosen != Auth::id()){
+            return redirect()->route('404');
+        }
         return view('pages.dosen.sub_bab.create', compact('bab'));
     }
 
     public function show($id_bab, $id) {
         $data = SubBab::findOrFail($id);
         $bab = Bab::findOrFail($id_bab);
+        if($bab->id_dosen != Auth::id() || $data->id_dosen != Auth::id()){
+            return redirect()->route('404');
+        }
         
         $data->min_akses_materi = TimeHelper::convertSecondsToMinutesAndSeconds($data->min_akses_materi);
         $data->min_akses_yt = TimeHelper::convertSecondsToMinutesAndSeconds($data->min_akses_yt);
@@ -39,6 +49,7 @@ class SubBabDosenController extends Controller
         try {
             $formData = $request->all();
             $formData['id_bab'] = $id_bab;
+            $formData['id_dosen'] = Auth::id();
             SubBab::create($formData);
             alert()->success('Hore!','Data berhasil ditambah');
             return redirect()->route('dosen.sub_bab.index',['id_bab' => $id_bab]);
@@ -51,6 +62,9 @@ class SubBabDosenController extends Controller
     public function edit($id_bab, $id) {
         $data = SubBab::findOrFail($id);
         $bab = Bab::findOrFail($id_bab);
+        if($bab->id_dosen != Auth::id() || $data->id_dosen != Auth::id()){
+            return redirect()->route('404');
+        }
         return view('pages.dosen.sub_bab.edit', compact('data', 'bab'));
     }
     

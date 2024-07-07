@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Dosen;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Bab;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class BabDosenController extends Controller
 {
     //
     public function index(){
-        $datas = Bab::orderBy('index', 'asc')->get();
+        $datas = Bab::where('id_dosen', Auth::id())->orderBy('index', 'asc')->get();
         $title = 'Hapus Data!';
         $text = "Apakah kamu yakin menghapus data ini?";
         confirmDelete($title, $text);
@@ -26,8 +28,13 @@ class BabDosenController extends Controller
     }
 
     public function store(Request $request){
+        // dd($request->thumbnail);
         try {
             $formData = $request->all();
+            $fileName = time() . '_image.' . $request->thumbnail->extension();
+            $pathPhoto = $request->thumbnail->storeAs('public/bab', $fileName);
+            $formData['thumbnail'] = 'storage/bab/' . $fileName;
+            $formData['id_dosen'] = Auth::id();
             Bab::create($formData);
             alert()->success('Hore!','Data berhasil ditambah');
             return redirect()->route('dosen.bab.index');
@@ -39,6 +46,9 @@ class BabDosenController extends Controller
 
     public function edit($id) {
         $data = Bab::findOrFail($id);
+        if($data->id_dosen != Auth::id()){
+            return redirect()->route('404');
+        }
         return view('pages.dosen.bab.edit', compact('data'));
     }
     
@@ -46,6 +56,12 @@ class BabDosenController extends Controller
         try {
             $bab = Bab::findOrFail($id);
             $formData = $request->all();
+            if($request->thumbnail){
+                Storage::delete('public/bab/' . basename($bab->thumbnail));
+                $fileName = time() . '_image.' . $request->thumbnail->extension();
+                $pathPhoto = $request->thumbnail->storeAs('public/bab', $fileName);
+                $formData['thumbnail'] = 'storage/bab/' . $fileName;
+            }
             $bab->update($formData);
             alert()->success('Hore!','Data berhasil diubah');
             return redirect()->route('dosen.bab.index');
@@ -59,6 +75,7 @@ class BabDosenController extends Controller
     {
         try{
             $bab = Bab::findOrFail($id);
+            Storage::delete('public/bab/' . basename($bab->thumbnail));
             $bab->delete();
             alert()->success('Hore!','Data berhasil dihapus');
             return back();

@@ -7,7 +7,7 @@
 @section('peringkat', 'nav-link collapsed')
 
 @section('content')
-    @include('sweetalert::alert')
+
 
     <div class="pagetitle">
         <h1>Manajemen Materi</h1>
@@ -38,6 +38,7 @@
                                         <th width="15%"><i class="bx bx-cog"></i></th>
                                         <th>Index</th>
                                         <th>Beli</th>
+                                        <th>Thumbnail</th>
                                         <th>Nama</th>
                                         <th>Durasi</th>
                                         <th>CP</th>
@@ -58,6 +59,8 @@
                                             </td>
                                             <td>{{ $data->index }}</td>
                                             <td>{{ $data->beli_point ?? 0 }} poin</td>
+                                            <td><img src="{{ asset($data->thumbnail) }}" style="height:40px" alt=""
+                                                    srcset=""></td>
                                             <td>{{ $data->nama }}</td>
                                             <td>{{ $data->durasi }}</td>
                                             <td>

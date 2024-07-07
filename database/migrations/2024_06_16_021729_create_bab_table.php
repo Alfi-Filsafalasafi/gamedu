@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('babs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_dosen')->constrained('users')->onDelete('cascade');
             $table->integer('index');
             $table->float('beli_point');
             $table->string('nama')->nullable();
             $table->string('durasi')->nullable();
             $table->longText('capaian_pembelajaran')->nullable();
+            $table->text('thumbnail')->nullable();
             $table->timestamps();
         });
     }

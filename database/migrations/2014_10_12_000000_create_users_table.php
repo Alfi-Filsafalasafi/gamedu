@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->foreignId('id_dosen')->nullable()->constrained('users')->onDelete('cascade');
+            $table->string('token_dosen')->nullable();
             $table->string('password');
             $table->enum('jenis_kelamin', ['L', 'P'])->nullable();
             $table->string('prodi')->nullable();

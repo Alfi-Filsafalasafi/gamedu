@@ -5,7 +5,7 @@
 @section('games', 'nav-link collapsed')
 @section('peringkat', 'nav-link ')
 @section('content')
-    @include('sweetalert::alert')
+
 
     <section class="section dashboard">
         <div class="row">

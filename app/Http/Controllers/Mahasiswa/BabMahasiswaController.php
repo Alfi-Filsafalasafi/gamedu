@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Auth;
 function getBabWithStatus()
 {
     $id_user = Auth::id();
-    $babs = Bab::all();
+    $babs = Bab::where('id_dosen', Auth::user()->id_dosen)->get();
 
     $logBabs = LogBabUser::where('id_user', $id_user)
         ->whereIn('id_bab', $babs->pluck('id'))
@@ -105,7 +105,7 @@ class BabMahasiswaController extends Controller
         $quiz_user = QuizPengumpulan::where('id_user', $id_user)->where('is_benar', 1)->count() * 10;
         $total_point_user = $membaca_user + $menonton_yt_user + $tugas_user + $quiz_user;
 
-        $peringkats = PeringkatController::calculateRank();
+        $peringkats = PeringkatController::calculateRank(Auth::user()->id_dosen);
 
         return view('pages.mahasiswa.bab.index', compact('datas', 'total_point', 'total_point_user', 'peringkats'));
     }

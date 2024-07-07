@@ -48,7 +48,7 @@
 @endsection
 
 @section('content')
-    @include('sweetalert::alert')
+
     <div class="pagetitle">
         <h1>Manajemen Materi</h1>
         <nav>

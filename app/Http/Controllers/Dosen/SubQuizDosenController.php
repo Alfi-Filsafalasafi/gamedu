@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Quiz;
 use App\Models\SubQuiz;
 use App\Helpers\TimeHelper;
+use Illuminate\Support\Facades\Auth;
 
 class SubQuizDosenController extends Controller
 {
@@ -14,6 +15,9 @@ class SubQuizDosenController extends Controller
     public function index($id_quiz){
         $datas = SubQuiz::where('id_quiz', $id_quiz)->orderBy('index', 'asc')->get();
         $quiz = Quiz::with('bab')->findOrFail($id_quiz);
+        if($quiz->id_dosen != Auth::id()){
+            return redirect()->route('404');
+        }
         $title = 'Hapus Data!';
         $text = "Apakah kamu yakin menghapus data ini?";
         confirmDelete($title, $text);
@@ -22,6 +26,9 @@ class SubQuizDosenController extends Controller
 
     public function create($id_quiz){
         $quiz = Quiz::findOrFail($id_quiz);
+        if($quiz->id_dosen != Auth::id()){
+            return redirect()->route('404');
+        }
         return view('pages.dosen.sub_quiz.create', compact('quiz'));
     }
 
@@ -49,8 +56,11 @@ class SubQuizDosenController extends Controller
     }
 
     public function edit($id_quiz, $id) {
-        $data = SubQuiz::findOrFail($id);
+        $data = SubQuiz::with('quiz')->findOrFail($id);
         $quiz = Quiz::findOrFail($id_quiz);
+        if($quiz->id_dosen != Auth::id() || $data->quiz->id_dosen != Auth::id()){
+            return redirect()->route('404');
+        }
         return view('pages.dosen.sub_quiz.edit', compact('data', 'quiz'));
     }
     

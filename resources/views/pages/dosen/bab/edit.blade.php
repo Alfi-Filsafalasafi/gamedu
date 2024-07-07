@@ -28,7 +28,7 @@
 
                         <!-- Custom Styled Validation -->
                         <form action="{{ route('dosen.bab.update', ['id' => $data->id]) }}" method="POST"
-                            class="row g-3 needs-validation" novalidate>
+                            class="row g-3 needs-validation" enctype="multipart/form-data" novalidate>
                             @csrf
                             @method('PATCH')
                             <div class="col-md-12">
@@ -42,6 +42,15 @@
                                         diperlukan untuk mengakses materi</small></label>
                                 <input type="number" min="0" name="beli_point" class="form-control" id="beli_point"
                                     value="{{ old('beli_point', $data->beli_point) }}" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Thumbnail
+                                    *opsional</label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input type="file" class="form-control" id="profileImage" name="thumbnail"
+                                        accept="image/*">
+                                    <div class="invalid-feedback">Please upload an image file (max 2MB).</div>
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <label for="nama" class="form-label">Nama Bab</label>

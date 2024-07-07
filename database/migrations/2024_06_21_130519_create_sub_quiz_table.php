@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('sub_quizs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_quiz')->constrained('quizs')->onDelete('cascade');
+            $table->foreignId('id_dosen')->constrained('users')->onDelete('cascade');
             $table->integer('index');
             $table->longText('pertanyaan')->nullable();
             $table->longText('jawaban_a')->nullable();

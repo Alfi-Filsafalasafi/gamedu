@@ -7,7 +7,7 @@
 @section('peringkat', 'nav-link collapsed')
 
 @section('content')
-    @include('sweetalert::alert')
+
 
     <section class="section dashboard">
         <div class="row justify-content-between">
