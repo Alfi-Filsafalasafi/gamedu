@@ -14,6 +14,8 @@ use App\Models\SubQuiz;
 use App\Models\QuizPengumpulan;
 use Illuminate\Support\Facades\Auth;
 use File;
+use Illuminate\Support\Facades\Storage;
+
 
 function getSubBabWithStatus($id_bab, $userId) {
     $subBabs = SubBab::where('id_bab', $id_bab)->get();
@@ -249,10 +251,16 @@ class SubBabMahasiswaController extends Controller
             ->where('id_user', $userId)
             ->first();
 
-            File::delete($log_sub_bab->file_tugas);
+            // File::delete($log_sub_bab->file_tugas);
+            // $fileName = time() . '_tugas.' . $request->file_tugas->extension();
+            // $request->file_tugas->move(public_path('assets/tugas/'), $fileName);
+            // $path = 'assets/tugas/' . $fileName;
+
+            Storage::delete('public/tugas/' . basename($log_sub_bab->file_tugas));
             $fileName = time() . '_tugas.' . $request->file_tugas->extension();
-            $request->file_tugas->move(public_path('assets/tugas/'), $fileName);
-            $path = 'assets/tugas/' . $fileName;
+            $request->file_tugas->storeAs('public/tugas', $fileName);
+            $path = 'storage/tugas/' . $fileName;
+
             $log_sub_bab->file_tugas = $path;
             $log_sub_bab->status_tugas = 'submit';
             $log_sub_bab->save();

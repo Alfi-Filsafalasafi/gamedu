@@ -8,6 +8,7 @@ use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Hash;
 use File;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -19,14 +20,15 @@ class ProfileController extends Controller
     public function updateProfile(Request $request){
         try{
             $find = User::findOrFail(Auth::id());
+            $fullName = $find->name;
+            $firstName = explode(' ', trim($fullName))[0];
             $formData = $request->all();
             if ($request->photo) {
                 // Hapus file PDF lama dari folder public
-                File::delete($find->photo);
-                $fileNamePhoto = time() . '_image.' . $request->photo->extension();
-                $request->photo->move(public_path('assets/img/profile'), $fileNamePhoto);
-                $pathPhoto = 'assets/img/profile/' . $fileNamePhoto;
-                $formData['photo'] = $pathPhoto;
+                Storage::delete('public/profile/' . basename($find->photo));
+                $fileNamePhoto = time() . '_' . $firstName . '_image.' . $request->photo->extension();
+                $pathPhoto = $request->photo->storeAs('public/profile', $fileNamePhoto);
+                $formData['photo'] = 'storage/profile/' . $fileNamePhoto;
             }
             $find->update($formData);
 
