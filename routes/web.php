@@ -32,7 +32,7 @@ use App\Http\Controllers\Admin\UserAdminController;
 */
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return view('welcome');
 })->name('welcome');
 
 Auth::routes();

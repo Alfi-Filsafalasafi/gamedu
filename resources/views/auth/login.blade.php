@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>GamEdu - Login</title>
+    <title>{{ env('APP_NAME', 'Laravel') }} - Login</title>
 
     @include('layouts.scripts.css')
 </head>
@@ -25,7 +25,7 @@
                             <div class="d-flex justify-content-center py-4">
                                 <a href="index.html" class="logo d-flex align-items-center w-auto">
                                     <img src="{{ asset('NiceAdmin/assets/img/logo.png') }}" alt="">
-                                    <span class="d-none d-lg-block">GamEdu</span>
+                                    <span class="d-none d-lg-block">{{ env('APP_NAME', 'Laravel') }}</span>
                                 </a>
                             </div><!-- End Logo -->
 

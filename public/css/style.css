@@ -1,0 +1,61 @@
+*{
+    font-family: "Poppins", sans-serif;
+}
+.nav-title {
+    padding: 20px 0 15px 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: #012970;
+    font-family: "Poppins", sans-serif;
+}
+.img-home{
+    height: 64px;
+}
+
+.title {
+    font-weight: 500;
+    color: #012970;
+    font-family: "Poppins", sans-serif;
+}
+.img-vector{
+    width: 90%;
+}
+
+.materi{
+    padding-top: 100px;
+    padding-bottom: 50px;
+}
+.berita{
+    background: #012970;
+    color: white;
+    padding-top: 80px;
+    padding-bottom: 60px;
+  }
+.info{
+    padding-top: 100px;
+    padding-bottom: 50px;
+}
+  .deskripsi{
+    font-size: 14px;
+  }
+
+  .btn-mulai{
+    background: #012970;
+    color: white;
+    margin-bottom: 30px;
+  }
+
+  .footer{
+    background: #012970;
+    color: white;
+    padding-top: 50px;
+    padding-bottom: 20px;
+  }
+
+  .header-footer {
+    padding: 20px 0 15px 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    font-family: "Poppins", sans-serif;
+  }

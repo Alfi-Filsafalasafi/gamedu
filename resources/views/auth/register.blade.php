@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>GamEdu - Register</title>
+    <title>{{ env('APP_NAME', 'Laravel') }} - Register</title>
 
     @include('layouts.scripts.css')
 </head>
@@ -23,7 +23,7 @@
                             <div class="d-flex justify-content-center py-4">
                                 <a href="{{ route('welcome') }}" class="logo d-flex align-items-center w-auto">
                                     <img src="{{ asset('NiceAdmin/assets/img/logo.png') }}" alt="">
-                                    <span class="d-none d-lg-block">GamEdu</span>
+                                    <span class="d-none d-lg-block">{{ env('APP_NAME', 'Laravel') }}</span>
                                 </a>
                             </div><!-- End Logo -->
                             @if ($errors->any())
@@ -94,7 +94,8 @@
                                         <div class="col-12">
                                             <div class="form-floating mb-2">
                                                 <input type="text" name="prodi" class="form-control"
-                                                    id="prodiInput" placeholder="" value="{{ old('prodi') }}" required>
+                                                    id="prodiInput" placeholder="" value="{{ old('prodi') }}"
+                                                    required>
                                                 <label for="prodiInput">Prodi</label>
                                             </div>
                                         </div>
@@ -148,7 +149,8 @@
                                             <button class="btn btn-primary w-100" type="submit">Buat Akun</button>
                                         </div>
                                         <div class="col-12">
-                                            <p class="small mb-0">Sudah punya akun? <a href="{{ route('login') }}">Log
+                                            <p class="small mb-0">Sudah punya akun? <a
+                                                    href="{{ route('login') }}">Log
                                                     in</a></p>
                                         </div>
                                     </form>
