@@ -126,8 +126,7 @@
         <section id="berita" class="berita">
             <div class="container pt-4">
                 <div class="text-center" style="margin-bottom: 50px">
-                    <h3 class="title text-white">Berita nih</h3>
-                    <p>jhgsdhjsgdsgdjh</p>
+                    <h3 class="title text-white">Berita</h3>
                     <p class="">Dapatkan dan baca berita terpercaya mengenai hal terkini yang relevan dengan
                         lingkungan sekitar.</p>
                 </div>
