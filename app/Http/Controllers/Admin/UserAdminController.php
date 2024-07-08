@@ -40,15 +40,15 @@ class UserAdminController extends Controller
                     $token = substr(md5(uniqid(mt_rand(), true)), 0, 6);
                 } while (User::where('token_dosen', $token)->exists());
                 $formData['token_dosen'] = $token;
-                $formData['id_dosen'] = '';
+                $formData['id_dosen'] = null;
             }elseif($request->role == 'admin'){
-                $formData['id_dosen'] = '';
+                $formData['id_dosen'] = null;
             }
             User::create($formData);
             alert()->success('Hore!','Data berhasil ditambah');
             return redirect()->route('admin.user.index');
         } catch (\Exception $th) {
-            return redirect()->route('admin.user.index')->with('success','Penambahan akun gagal karena'. $th.getMessage());
+            return redirect()->route('admin.user.index')->with('success','Penambahan akun gagal karena'. $th->getMessage());
             //throw $th;
         }
     }

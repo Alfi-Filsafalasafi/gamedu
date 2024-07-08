@@ -36,7 +36,7 @@ class BeritaAdminController extends Controller
             alert()->success('Hore!','Data berhasil ditambah');
             return redirect()->route('admin.berita.index');
         }catch(\Exception $th){
-            alert()->error('Gagal!','Data gagal ditambah, silahkan coba lagi'. $th.getMessage());
+            alert()->error('Gagal!','Data gagal ditambah, silahkan coba lagi'. $th->getMessage());
             return back();
         }
 
