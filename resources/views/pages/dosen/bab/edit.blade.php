@@ -50,6 +50,9 @@
                                     <input type="file" class="form-control" id="profileImage" name="thumbnail"
                                         accept="image/*">
                                     <div class="invalid-feedback">Please upload an image file (max 2MB).</div>
+                                    @error('thumbnail')
+                                        <div class="text-danger">Please upload an image file (max 2MB).</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-12">

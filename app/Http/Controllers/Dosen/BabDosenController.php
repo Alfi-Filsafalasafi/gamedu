@@ -29,6 +29,9 @@ class BabDosenController extends Controller
 
     public function store(Request $request){
         // dd($request->thumbnail);
+        $request->validate([
+            'thumbnail' => 'required|max:2048',
+        ]);
         try {
             $formData = $request->all();
             $fileName = time() . '_bab.' . $request->thumbnail->extension();
@@ -57,6 +60,9 @@ class BabDosenController extends Controller
     }
     
     public function update(Request $request, $id) {
+        $request->validate([
+            'thumbnail' => 'required|max:2048',
+        ]);
         try {
             $bab = Bab::findOrFail($id);
             $formData = $request->all();
