@@ -25,7 +25,7 @@
 
                         <!-- Custom Styled Validation -->
                         <form action="{{ route('admin.berita.store') }}" class="row g-3 needs-validation" method="POST"
-                            enctype="multipart/form-data" novalidate>
+                            enctype="multipart/form-data" id="uploadForm" novalidate>
                             @csrf
                             <div class="col-md-12">
                                 <label for="judul" class="form-label">Judul <small class="text-danger">*</small></label>
@@ -74,20 +74,20 @@
     </section>
 @endsection
 @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function toggleDosenField() {
-            var roleSelect = document.getElementById('role');
-            var dosenField = document.getElementById('dosenField');
-            if (roleSelect.value == 'mahasiswa') {
-                dosenField.style.display = 'block';
-            } else {
-                dosenField.style.display = 'none';
-            }
-        }
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            var fileInput = document.getElementById('photo');
+            var file = fileInput.files[0];
 
-        // Call the function on page load to set the correct initial state
-        document.addEventListener('DOMContentLoaded', function() {
-            toggleDosenField();
+            if (file && file.size > 2 * 1024 * 1024) { // 2 MB in bytes
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Gambar Tidak boleh lebih dari 2MB'
+                });
+                event.preventDefault(); // Prevent form submission
+            }
         });
     </script>
 @endsection

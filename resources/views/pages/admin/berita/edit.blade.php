@@ -24,7 +24,7 @@
 
                         <!-- Custom Styled Validation -->
                         <form action="{{ route('admin.berita.update', $data->id) }}" class="row g-3 needs-validation"
-                            method="POST" enctype="multipart/form-data" novalidate>
+                            method="POST" enctype="multipart/form-data" id="uploadForm" novalidate>
                             @csrf
                             @method('PATCH')
                             <div class="col-md-12">
@@ -71,4 +71,20 @@
     </section>
 @endsection
 @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            var fileInput = document.getElementById('photo');
+            var file = fileInput.files[0];
+
+            if (file && file.size > 2 * 1024 * 1024) { // 2 MB in bytes
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Gambar Tidak boleh lebih dari 2MB'
+                });
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+    </script>
 @endsection

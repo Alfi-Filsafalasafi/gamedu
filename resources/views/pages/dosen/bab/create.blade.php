@@ -27,8 +27,8 @@
                         <h5 class="card-title">Tambah Bab</h5>
 
                         <!-- Custom Styled Validation -->
-                        <form action="{{ route('dosen.bab.store') }}" method="POST" class="row g-3 needs-validation"
-                            enctype="multipart/form-data" novalidate>
+                        <form action="{{ route('dosen.bab.store') }}" id="uploadForm" method="POST"
+                            class="row g-3 needs-validation" enctype="multipart/form-data" novalidate>
                             @csrf
                             <div class="col-md-12">
                                 <label for="index" class="form-label">Index</label>
@@ -81,4 +81,22 @@
             </div>
         </div>
     </section>
+@endsection
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            var fileInput = document.getElementById('profileImage');
+            var file = fileInput.files[0];
+
+            if (file && file.size > 2 * 1024 * 1024) { // 2 MB in bytes
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Gambar Tidak boleh lebih dari 2MB'
+                });
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+    </script>
 @endsection
