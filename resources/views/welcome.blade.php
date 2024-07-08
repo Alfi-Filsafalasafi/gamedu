@@ -147,7 +147,7 @@
                             <div class="row">
                                 @foreach ($beritaChunk as $berita)
                                     <div class="col-lg-4">
-                                        <a href="">
+                                        <a href="{{ route('berita', ['id' => $berita->id]) }}">
                                             <div class="card">
                                                 <img src="{{ asset($berita->photo) }}" class="card-img-top"
                                                     style="height: 200px; object-fit: cover"

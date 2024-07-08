@@ -45,7 +45,8 @@
                                 @enderror
                             </div>
                             <div class="col-md-12">
-                                <label for="photo" class="col-md-4 col-lg-3 col-form-label">Image</label>
+                                <label for="photo" class="col-md-4 col-lg-3 col-form-label">Image
+                                    <small>opsional</small></label>
                                 <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
                                 <small class="text-muted">Kosongkan jika tidak ingin mengubah gambar.</small>
                                 @error('photo')

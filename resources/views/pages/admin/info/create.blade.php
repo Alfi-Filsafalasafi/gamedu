@@ -36,7 +36,8 @@
                                 @enderror
                             </div>
                             <div class="col-md-12">
-                                <label for="photo" class="col-md-4 col-lg-3 col-form-label">Image</label>
+                                <label for="photo" class="col-md-4 col-lg-3 col-form-label">Image <small
+                                        class="text-danger">*</small></label>
                                 <input type="file" class="form-control" id="photo" name="photo" accept="image/*"
                                     required>
                                 <div class="invalid-feedback">Please upload an image file (max 2MB).</div>

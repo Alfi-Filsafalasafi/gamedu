@@ -34,7 +34,8 @@
                                 @enderror
                             </div>
                             <div class="col-md-12">
-                                <label for="photo" class="form-label">Photo <small class="text-danger">*</small></label>
+                                <label for="photo" class="form-label">Photo <small
+                                        class="">*opsional</small></label>
                                 <input type="file" name="photo" class="form-control" id="photo">
                                 @error('photo')
                                     <small class="mt-0 text-danger" style="font-size: 12px">{{ $message }}</small>

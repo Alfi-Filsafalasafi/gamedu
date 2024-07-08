@@ -371,9 +371,24 @@
                 confirmButtonText: 'Ya, saya yakin!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    document.getElementById('pengumpulanTugasForm').submit();
+                    var fileInput = document.getElementById('formFile');
+                    var file = fileInput.files[0];
+
+                    if (file && file.size > 2 * 1024 * 1024) { // 2 MB in bytes
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Gambar Tidak boleh lebih dari 2MB'
+                        });
+                        event.preventDefault(); // Prevent form submission
+                    } else {
+                        document.getElementById('pengumpulanTugasForm').submit();
+
+                    }
                 }
             });
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script></script>
 @endsection

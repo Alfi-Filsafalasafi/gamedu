@@ -10,6 +10,11 @@
 
     <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
+            @if (auth()->user()->role == 'dosen')
+                <li class="nav-item dropdown me-4 d-flex align-items-center">
+                    <span>Token anda : {{ auth()->user()->token_dosen }}</span>
+                </li>
+            @endif
             <li class="nav-item dropdown">
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                     <i class="bi bi-bell"></i>

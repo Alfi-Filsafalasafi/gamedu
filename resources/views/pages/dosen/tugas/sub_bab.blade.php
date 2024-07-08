@@ -5,7 +5,14 @@
 @section('kuis', 'nav-link collapsed')
 @section('tugas', 'nav-link')
 @section('peringkat', 'nav-link collapsed')
-
+@section('style')
+    <style>
+        .capaian img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+@endsection
 @section('content')
 
 
@@ -33,7 +40,9 @@
                     <h5>{{ $bab->nama }}</h5>
                     <div class="alert border-primary fade show small pb-0" role="alert">
                         <b>Capaian Pembelajaran</b>
-                        {!! $bab->capaian_pembelajaran !!}
+                        <div class="capaian">
+                            {!! $bab->capaian_pembelajaran !!}
+                        </div>
 
                     </div>
                 </div>

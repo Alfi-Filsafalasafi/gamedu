@@ -85,7 +85,7 @@
                             <div class="d-flex align-items-center mt-3">
                                 <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 16px"></i>
                                 <span class="" style="font-size: 14px"> Poin maksimal tugas = <b>
-                                        {{ $data->point_tugas }}</b></span>
+                                        {{ $sub_bab->point_tugas }}</b></span>
                             </div>
                         </div>
                     </div>
