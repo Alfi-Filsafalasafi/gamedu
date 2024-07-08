@@ -2,6 +2,9 @@
 @section('title', 'Manajemen Akun')
 @section('dashboard', 'nav-link collapsed')
 @section('user', 'nav-link')
+@section('berita', 'nav-link collapsed')
+@section('info', 'nav-link collapsed')
+
 @section('content')
 
 
@@ -9,7 +12,7 @@
         <h1>Manajemen Akun</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('welcome') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
                 <li class="breadcrumb-item active">Manajemen Akun</li>
             </ol>
         </nav>

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\WelcomeController;
 
 use App\Http\Controllers\Mahasiswa\HomeMahasiswaController;
 use App\Http\Controllers\Mahasiswa\BabMahasiswaController;
@@ -20,6 +22,8 @@ use App\Http\Controllers\Dosen\TugasDosenController;
 
 use App\Http\Controllers\Admin\HomeAdminController;
 use App\Http\Controllers\Admin\UserAdminController;
+use App\Http\Controllers\Admin\BeritaAdminController;
+use App\Http\Controllers\Admin\InfoAdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,9 +35,8 @@ use App\Http\Controllers\Admin\UserAdminController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
+Route::get('/berita/{id}',[BeritaController::class, 'index'])->name('berita');
 
 Auth::routes();
 Route::middleware('auth')->group(function () {
@@ -152,6 +155,22 @@ Route::middleware(['role:admin'])->group(function () {
             Route::get('/edit/{id}', [UserAdminController::class, 'edit'])->name('edit');
             Route::patch('/update/{id}', [UserAdminController::class, 'update'])->name('update');
             Route::delete('/delete/{id}', [UserAdminController::class, 'delete'])->name('delete');
+        });
+        Route::prefix('berita')->name('berita.')->group(function () {
+            Route::get('/', [BeritaAdminController::class, 'index'])->name('index');
+            Route::get('/create', [BeritaAdminController::class, 'create'])->name('create');
+            Route::post('/store', [BeritaAdminController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [BeritaAdminController::class, 'edit'])->name('edit');
+            Route::patch('/update/{id}', [BeritaAdminController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [BeritaAdminController::class, 'delete'])->name('delete');
+        });
+        Route::prefix('info')->name('info.')->group(function () {
+            Route::get('/', [InfoAdminController::class, 'index'])->name('index');
+            Route::get('/create', [InfoAdminController::class, 'create'])->name('create');
+            Route::post('/store', [InfoAdminController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [InfoAdminController::class, 'edit'])->name('edit');
+            Route::patch('/update/{id}', [InfoAdminController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [InfoAdminController::class, 'delete'])->name('delete');
         });
     });
 

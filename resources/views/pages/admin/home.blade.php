@@ -2,6 +2,8 @@
 @section('title', 'Home Admin')
 @section('dashboard', 'nav-link')
 @section('user', 'nav-link collapsed')
+@section('berita', 'nav-link collapsed')
+@section('info', 'nav-link collapsed')
 @section('content')
     <section class="section dashboard">
         <div class="row">

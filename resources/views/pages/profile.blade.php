@@ -8,6 +8,8 @@
 @section('games', 'nav-link collapsed')
 @section('peringkat', 'nav-link collapsed')
 
+@section('berita', 'nav-link collapsed')
+@section('info', 'nav-link collapsed')
 
 @section('content')
     <div class="pagetitle">

@@ -17,3 +17,15 @@
         <span>User</span>
     </a>
 </li>
+<li class="nav-item">
+    <a class="@yield('berita')" href="{{ route('admin.berita.index') }}">
+        <i class="bi bi-newspaper"></i>
+        <span>Berita</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="@yield('info')" href="{{ route('admin.info.index') }}">
+        <i class="bi bi-file-earmark-image"></i>
+        <span>Informasi</span>
+    </a>
+</li>

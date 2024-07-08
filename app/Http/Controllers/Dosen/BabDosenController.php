@@ -31,9 +31,13 @@ class BabDosenController extends Controller
         // dd($request->thumbnail);
         try {
             $formData = $request->all();
-            $fileName = time() . '_image.' . $request->thumbnail->extension();
-            $pathPhoto = $request->thumbnail->storeAs('public/bab', $fileName);
-            $formData['thumbnail'] = 'storage/bab/' . $fileName;
+            $fileName = time() . '_bab.' . $request->thumbnail->extension();
+            $request->thumbnail->move(public_path('assets/img/bab'), $fileName);
+            $pathPhoto = 'assets/img/bab/' . $fileName;
+            $formData['thumbnail'] = $pathPhoto;
+            // $fileName = time() . '_image.' . $request->thumbnail->extension();
+            // $pathPhoto = $request->thumbnail->storeAs('public/bab', $fileName);
+            // $formData['thumbnail'] = 'storage/bab/' . $fileName;
             $formData['id_dosen'] = Auth::id();
             Bab::create($formData);
             alert()->success('Hore!','Data berhasil ditambah');
