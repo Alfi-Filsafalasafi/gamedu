@@ -63,7 +63,7 @@ class TugasDosenController extends Controller
 
     public function respon($id_bab, $id_sub_bab, $id){
         $bab = Bab::findOrFail($id_bab);
-        $sub_bab = SubBab::findOrFail($id);
+        $sub_bab = SubBab::findOrFail($id_sub_bab);
         $data = LogSubBabUser::with('user')->findOrFail($id);
         
         $total_point = $sub_bab->point_membaca + $sub_bab->point_menonton_yt + $sub_bab->point_tugas;

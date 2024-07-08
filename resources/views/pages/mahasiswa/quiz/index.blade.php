@@ -4,7 +4,45 @@
 @section('materi', 'nav-link ')
 @section('games', 'nav-link collapsed')
 @section('peringkat', 'nav-link collapsed')
+<style>
+    .pertanyaan img {
+        width: 100%;
+        height: auto;
+    }
 
+    .jawaban img {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Untuk layar medium (768px - 992px) */
+    @media (min-width: 768px) and (max-width: 992px) {
+        .pertanyaan img {
+            width: 60%;
+            height: auto;
+        }
+
+        .jawaban img {
+            width: 60%;
+            height: auto;
+        }
+    }
+
+    /* Untuk layar besar (> 992px) */
+    @media (min-width: 992px) {
+        .pertanyaan img {
+            width: 55%;
+            height: auto;
+
+        }
+
+        .jawaban img {
+            width: 55%;
+            height: auto;
+
+        }
+    }
+</style>
 @section('content')
 
 
@@ -58,7 +96,7 @@
                                     <div class="card-body pt-3">
                                         <div class="d-flex align-items-start">
                                             <p><b class="me-2">{{ $loop->iteration }}</b>. </p>
-                                            <div class="m-1">
+                                            <div class="pertanyaan m-1">
                                                 {!! $quiz->pertanyaan !!}
                                             </div>
                                         </div>
@@ -74,7 +112,7 @@
                                                             name="jawaban[{{ $quizIndex }}][jawaban]"
                                                             value="{{ $jawabanIndex }}"
                                                             @if (old("jawaban.$quizIndex.jawaban") == $jawabanIndex) checked @endif />
-                                                        <label class="form-check-label ms-3"
+                                                        <label class="form-check-label ms-3 jawaban"
                                                             for="jawaban_{{ $quizIndex }}_{{ $jawabanIndex }}">
                                                             {!! $quiz->{'jawaban_' . strtolower($jawabanIndex)} !!}
                                                         </label>
