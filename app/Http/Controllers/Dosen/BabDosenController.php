@@ -61,7 +61,7 @@ class BabDosenController extends Controller
     
     public function update(Request $request, $id) {
         $request->validate([
-            'thumbnail' => 'required|max:2048',
+            'thumbnail' => 'nullable|max:2048',
         ]);
         try {
             $bab = Bab::findOrFail($id);
