@@ -5,7 +5,14 @@
 @section('kuis', 'nav-link')
 @section('tugas', 'nav-link collapsed')
 @section('peringkat', 'nav-link collapsed')
-
+@section('style')
+    <style>
+        .modal-body img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+@endsection
 @section('content')
 
 
