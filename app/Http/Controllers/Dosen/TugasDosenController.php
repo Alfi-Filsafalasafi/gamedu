@@ -9,6 +9,7 @@ use App\Models\SubBab;
 use App\Models\User;
 use App\Models\LogSubBabUser;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class TugasDosenController extends Controller
 {
@@ -51,6 +52,7 @@ class TugasDosenController extends Controller
         })
         ->select('users.*', 'log_sub_bab_users.*')
         ->where('users.role', 'mahasiswa')
+        ->where('users.id_dosen', Auth::id())
         ->get();
     
         $total_point = $sub_bab->point_membaca + $sub_bab->point_menonton_yt + $sub_bab->point_tugas;

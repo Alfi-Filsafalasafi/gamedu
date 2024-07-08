@@ -25,10 +25,15 @@ class ProfileController extends Controller
             $formData = $request->all();
             if ($request->photo) {
                 // Hapus file PDF lama dari folder public
-                Storage::delete('public/profile/' . basename($find->photo));
-                $fileNamePhoto = time() . '_' . $firstName . '_image.' . $request->photo->extension();
-                $pathPhoto = $request->photo->storeAs('public/profile', $fileNamePhoto);
-                $formData['photo'] = 'storage/profile/' . $fileNamePhoto;
+                File::delete($find->photo);
+                $fileNamePhoto = time() . '_' . Auth::user()->name .  '_profile.' . $request->photo->extension();
+                $request->photo->move(public_path('assets/img/profile'), $fileNamePhoto);
+                $pathPhoto = 'assets/img/profile/' . $fileNamePhoto;
+                $formData['photo'] = $pathPhoto;
+                // Storage::delete('public/profile/' . basename($find->photo));
+                // $fileNamePhoto = time() . '_' . $firstName . '_image.' . $request->photo->extension();
+                // $pathPhoto = $request->photo->storeAs('public/profile', $fileNamePhoto);
+                // $formData['photo'] = 'storage/profile/' . $fileNamePhoto;
             }
             $find->update($formData);
 
