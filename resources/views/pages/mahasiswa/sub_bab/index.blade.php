@@ -4,7 +4,30 @@
 @section('materi', 'nav-link ')
 @section('games', 'nav-link collapsed')
 @section('peringkat', 'nav-link collapsed')
+@section('style')
+    <style>
+        .capaian img {
+            width: 100%;
+            height: auto;
+        }
 
+        @media (min-width: 768px) and (max-width: 992px) {
+            .capaian img {
+                width: 70%;
+                height: auto;
+            }
+        }
+
+        /* Untuk layar besar (> 992px) */
+        @media (min-width: 992px) {
+            .capaian img {
+                width: 55%;
+                height: auto;
+
+            }
+        }
+    </style>
+@endsection
 @section('content')
 
 
@@ -37,7 +60,9 @@
                 </div>
                 <div class="alert fade show small pb-0 bg-white" role="alert">
                     <b>Capaian Pembelajaran</b>
-                    {!! $bab->capaian_pembelajaran !!}
+                    <div class="capaian">
+                        {!! $bab->capaian_pembelajaran !!}
+                    </div>
                 </div>
             </div>
             <div class="col-lg-8">

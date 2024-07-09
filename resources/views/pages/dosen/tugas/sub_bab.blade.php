@@ -11,6 +11,22 @@
             width: 100%;
             height: auto;
         }
+
+        @media (min-width: 768px) and (max-width: 992px) {
+            .capaian img {
+                width: 70%;
+                height: auto;
+            }
+        }
+
+        /* Untuk layar besar (> 992px) */
+        @media (min-width: 992px) {
+            .capaian img {
+                width: 55%;
+                height: auto;
+
+            }
+        }
     </style>
 @endsection
 @section('content')
