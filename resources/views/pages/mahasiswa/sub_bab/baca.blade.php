@@ -11,10 +11,20 @@
             height: auto;
         }
 
+        .tugas img {
+            width: 100%;
+            height: auto;
+        }
+
         /* Untuk layar medium (768px - 992px) */
         @media (min-width: 768px) and (max-width: 992px) {
             .content img {
                 width: 80%;
+                height: auto;
+            }
+
+            .tugas img {
+                width: 70%;
                 height: auto;
             }
         }
@@ -25,6 +35,11 @@
                 width: 75%;
                 height: auto;
 
+            }
+
+            .tugas img {
+                width: 100%;
+                height: auto;
             }
         }
     </style>
@@ -151,7 +166,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="content">
+                                <div class="tugas">
                                     {!! $data->uraian_tugas !!}
                                 </div>
                                 @if ($logSubBabUser->status_tugas == '')
