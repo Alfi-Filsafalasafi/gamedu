@@ -12,7 +12,7 @@ class BabDosenController extends Controller
 {
     //
     public function index(){
-        $datas = Bab::where('id_dosen', Auth::id())->orderBy('index', 'asc')->get();
+        $datas = Bab::with('subBabs')->where('id_dosen', Auth::id())->orderBy('index', 'asc')->get();
         $title = 'Hapus Data!';
         $text = "Apakah kamu yakin menghapus data ini?";
         confirmDelete($title, $text);
