@@ -51,6 +51,7 @@
                                         <th>Nama</th>
                                         <th>Durasi</th>
                                         <th>CP</th>
+                                        <th>Jumlah</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -100,6 +101,9 @@
                                                     </div>
                                                 </div>
 
+                                            </td>
+                                            <td>
+                                                {{ $data->subBabs->count() }} Materi
                                             </td>
                                         </tr>
                                     @endforeach
