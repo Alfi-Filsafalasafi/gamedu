@@ -91,12 +91,16 @@ class BabMahasiswaController extends Controller
         $datas = getBabWithStatus();
         // dd($datas);
 
-        $membaca = SubBab::sum('point_membaca');
-        $menonton_yt = SubBab::sum('point_menonton_yt');
-        $tugas = SubBab::sum('point_tugas');
-        $quiz = SubQuiz::count() * 10 ;
-        $total_point = $membaca + $menonton_yt + $tugas + $quiz;
+        $id_dosen =  Auth::user()->id_dosen;
 
+        $membaca = SubBab::where('id_dosen',$id_dosen)->sum('point_membaca');
+        $menonton_yt = SubBab::where('id_dosen',$id_dosen)->sum('point_menonton_yt');
+        $tugas = SubBab::where('id_dosen',$id_dosen)->sum('point_tugas');
+        $quiz = SubQuiz::whereHas('quiz', function($query) use ($id_dosen) {
+            $query->where('id_dosen',$id_dosen);
+        })->count();
+        $total_point = $membaca + $menonton_yt + $tugas + $quiz * 10;
+        
         $id_user = Auth::id();
 
         $membaca_user = LogSubBabUser::where('id_user', $id_user)->sum('point_membaca');

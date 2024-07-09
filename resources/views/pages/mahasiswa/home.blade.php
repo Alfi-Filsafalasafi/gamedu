@@ -67,7 +67,7 @@
                                         <i class="ri-copper-coin-fill text-warning me-2" style="font-size: 20px"></i>
                                         <span class=""
                                             style="font-size: 16px"><b>{{ $data->total_point_user ?? 0 }}</b> /
-                                            {{ $data->subBabs->sum('point_membaca') + $data->subBabs->sum('point_menonton_yt') + $data->subBabs->sum('point_tugas') }}</span>
+                                            {{ $data->subBabs->sum('point_membaca') + $data->subBabs->sum('point_menonton_yt') + $data->subBabs->sum('point_tugas') + $data->total_quiz }}</span>
                                     </div>
                                 </div>
                                 <div class="card-body">
