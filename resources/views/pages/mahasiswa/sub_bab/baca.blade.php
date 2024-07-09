@@ -96,7 +96,7 @@
                                     @csrf
                                     @method('PATCH')
                                     <span id="timerMembaca" class="me-3"></span>
-                                    <button type="button" class="btn btn-sm btn-outline-primary btn-fw" id="membacaId"
+                                    <button type="button" class="btn btn-sm btn-outline-primary btn-fw mt-2" id="membacaId"
                                         onclick="confirmMembaca()" disabled>Selesai</button>
                                 </form>
                             @else
@@ -104,7 +104,8 @@
                                 <i class="ri-star-fill" style="color:#ffd700; font-size:24px"></i>
                                 <i class="ri-star-fill" style="color:#ffd700; font-size:24px"></i>
 
-                                <button type="button" class="btn btn-sm btn-outline-secondary btn-fw ms-3" disabled>Sudah
+                                <button type="button" class="btn btn-sm btn-outline-secondary btn-fw mt-2 ms-3"
+                                    disabled>Sudah
                                     Selesai</button>
                             @endif
                         </div>
@@ -134,15 +135,15 @@
                                         @csrf
                                         @method('PATCH')
                                         <span id="timerYt" class="me-3"></span>
-                                        <button type="button" class="btn btn-sm btn-outline-primary btn-fw" id="ytId"
-                                            onclick="confirmMenontonYt()" disabled>Selesai</button>
+                                        <button type="button" class="btn btn-sm btn-outline-primary mt-2 btn-fw"
+                                            id="ytId" onclick="confirmMenontonYt()" disabled>Selesai</button>
                                     </form>
                                 @else
                                     <i class="ri-star-fill" style="color:#ffd700; font-size:24px"></i>
                                     <i class="ri-star-fill" style="color:#ffd700; font-size:24px"></i>
                                     <i class="ri-star-fill" style="color:#ffd700; font-size:24px"></i>
 
-                                    <button type="button" class="btn btn-sm btn-outline-secondary btn-fw ms-3"
+                                    <button type="button" class="btn btn-sm btn-outline-secondary btn-fw mt-2 ms-3"
                                         disabled>Sudah
                                         Selesai</button>
                                 @endif
