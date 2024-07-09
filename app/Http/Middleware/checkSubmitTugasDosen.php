@@ -17,7 +17,10 @@ class checkSubmitTugasDosen
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check() && Auth::user()->role == 'dosen') {
-            $jumlahTugas = LogSubBabUser::where('status_tugas', 'submit')->count();
+            $idDosen = Auth::id();
+            $jumlahTugas = LogSubBabUser::where('status_tugas', 'submit')->whereHas('subBab', function($query) use ($idDosen) {
+                $query->where('id_dosen', $idDosen);
+            })->count();
             view()->share('jumlahTugas', $jumlahTugas);
         }
         return $next($request);

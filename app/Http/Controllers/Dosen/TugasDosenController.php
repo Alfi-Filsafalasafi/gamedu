@@ -17,7 +17,7 @@ class TugasDosenController extends Controller
     public function bab(){
         $datas = Bab::withCount(['logSubBabUsers as jumlah_tugas' => function($query) {
             $query->where('status_tugas', 'submit');
-        }])->orderBy('index', 'asc')->get();
+        }])->where('id_dosen', Auth::id())->orderBy('index', 'asc')->get();
     //     $datas = SubBab::where('id_bab', $id_bab)
     // ->leftJoin('log_sub_bab_user', 'sub_babs.id', '=', 'log_sub_bab_user.id_sub_bab')
     // ->select('sub_babs.*', DB::raw('COUNT(log_sub_bab_user.id) as jumlah_tugas'))
@@ -30,6 +30,9 @@ class TugasDosenController extends Controller
 
     public function sub_bab($id_bab){
         $bab= Bab::findOrFail($id_bab);
+        if($bab->id_dosen != Auth::id()){
+            return redirect()->route('404');
+        }
         // $datas = SubBab::where('id_bab', $id_bab)->orderBy('index', 'asc')->get();
         $datas = SubBab::withCount(['logSubBabUsers as jumlah_tugas' => function($query){
                 $query->where('status_tugas', 'submit');
@@ -44,6 +47,9 @@ class TugasDosenController extends Controller
 
     public function pengumpulan($id_bab, $id){
         $bab = Bab::findOrFail($id_bab);
+        if($bab->id_dosen != Auth::id()){
+            return redirect()->route('404');
+        }
         $sub_bab = SubBab::findOrFail($id);
         $datas = User::leftJoin('log_sub_bab_users', function($join) use ($id) {
             $join->on('users.id', '=', 'log_sub_bab_users.id_user')
