@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Home Dosen')
+@section('title', 'Pengumpulan')
 @section('dashboard', 'nav-link collapsed')
 @section('materi', 'nav-link collapsed')
 @section('kuis', 'nav-link collapsed')
@@ -16,7 +16,7 @@
                     <nav>
                         <h1>Tugas Mahasiswa</h1>
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('welcome') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dosen.index') }}">Home</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('dosen.tugas.bab') }}">Materi</a></li>
                             <li class="breadcrumb-item"><a
                                     href="{{ route('dosen.tugas.sub_bab', ['id_bab' => $sub_bab->id_bab]) }}">{{ $bab->nama }}</a>

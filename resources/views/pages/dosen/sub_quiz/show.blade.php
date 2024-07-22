@@ -12,7 +12,7 @@
         <h1>Manajemen Materi</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('welcome') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('dosen.index') }}">Home</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('dosen.bab.index') }}">Manajemen Materi</a> </li>
                 <li class="breadcrumb-item active">{{ $bab->nama }}</li>
             </ol>

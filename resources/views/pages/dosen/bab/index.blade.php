@@ -22,7 +22,15 @@
         <h1>Manajemen Materi</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('welcome') }}">Home</a></li>
+                <li class="breadcrumb-item">
+                    @if (auth()->user()->role == 'admin')
+                        <a href="{{ route('admin.index') }}">Home</a>
+                    @elseif (auth()->user()->role == 'mahasiswa')
+                        <a href="{{ route('mahasiswa.index') }}">Home</a>
+                    @elseif(auth()->user()->role == 'dosen')
+                        <a href="{{ route('dosen.index') }}">Home</a>
+                    @endif
+                </li>
                 <li class="breadcrumb-item active">Manajemen Materi</li>
             </ol>
         </nav>

@@ -20,7 +20,7 @@
         <h1>Manajemen Kuis</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('welcome') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('dosen.index') }}">Home</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('dosen.quiz.index') }}">Manajemen Kuis</a></li>
                 <li class="breadcrumb-item active">{{ $quiz->bab->nama }}</li>
                 <li class="breadcrumb-item active">{{ $quiz->type }}</li>

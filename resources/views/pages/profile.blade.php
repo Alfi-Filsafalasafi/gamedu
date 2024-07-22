@@ -8,6 +8,9 @@
 @section('games', 'nav-link collapsed')
 @section('peringkat', 'nav-link collapsed')
 
+@section('kuis', 'nav-link collapsed')
+@section('tugas', 'nav-link collapsed')
+
 @section('berita', 'nav-link collapsed')
 @section('info', 'nav-link collapsed')
 
@@ -16,7 +19,16 @@
         <h1>Profil Saya</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('welcome') }}">Home</a></li>
+                <li class="breadcrumb-item">
+                    @if (auth()->user()->role == 'admin')
+                        <a href="{{ route('admin.index') }}">Home</a>
+                    @elseif (auth()->user()->role == 'mahasiswa')
+                        <a href="{{ route('mahasiswa.index') }}">Home</a>
+                    @elseif(auth()->user()->role == 'dosen')
+                        <a href="{{ route('dosen.index') }}">Home</a>
+                    @endif
+
+                </li>
                 <li class="breadcrumb-item active">Profil Saya</li>
             </ol>
         </nav>

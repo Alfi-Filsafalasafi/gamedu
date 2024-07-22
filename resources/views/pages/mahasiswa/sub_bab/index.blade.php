@@ -38,7 +38,15 @@
                     <nav>
                         <h1>Materi</h1>
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('welcome') }}">Home</a></li>
+                            <li class="breadcrumb-item">
+                                @if (auth()->user()->role == 'admin')
+                                    <a href="{{ route('admin.index') }}">Home</a>
+                                @elseif (auth()->user()->role == 'mahasiswa')
+                                    <a href="{{ route('mahasiswa.index') }}">Home</a>
+                                @elseif(auth()->user()->role == 'dosen')
+                                    <a href="{{ route('dosen.index') }}">Home</a>
+                                @endif
+                            </li>
                             <li class="breadcrumb-item"><a href="{{ route('mahasiswa.bab.index') }}">Materi</a></li>
                             <li class="breadcrumb-item active">{{ $bab->nama }}</li>
                         </ol>

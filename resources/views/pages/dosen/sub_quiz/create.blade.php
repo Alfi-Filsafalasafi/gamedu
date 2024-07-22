@@ -12,7 +12,9 @@
         <h1>Manajemen Materi</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('dosen.index') }}">Home</a></li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('dosen.index') }}">Home</a>
+                </li>
                 <li class="breadcrumb-item"><a href="{{ route('dosen.bab.index') }}"></a> Manajemen MKuis</li>
                 <li class="breadcrumb-item">{{ $quiz->bab->nama }}</li>
                 <li class="breadcrumb-item">{{ $quiz->type }}</li>
