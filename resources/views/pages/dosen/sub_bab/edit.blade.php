@@ -29,7 +29,7 @@
 
                         <!-- Custom Styled Validation -->
                         <form action="{{ route('dosen.sub_bab.update', ['id_bab' => $bab->id, 'id' => $data->id]) }}"
-                            method="POST" class="row g-3 needs-validation" novalidate>
+                            method="POST" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
                             @csrf
                             @method('PATCH')
                             <div class="col-md-12">
@@ -137,6 +137,13 @@
                                         class="form-control" value="{{ old('min_akses_yt', $data->min_akses_yt) }}" />
                                     <span class="input-group-text">detik</span>
                                 </div>
+                            </div>
+                            <hr>
+                            <div class="col-md-12">
+                                <label for="lampiran_pdf" class="form-label">Lampiran konten pdf
+                                    <small class="text-success">*opsional</small></label>
+                                <input type="file" name="lampiran_pdf" id="lampiran_pdf" accept="application/pdf"
+                                    class="form-control" />
                             </div>
 
                             <div class="col-12">

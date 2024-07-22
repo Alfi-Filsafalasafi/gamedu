@@ -8,6 +8,8 @@ use App\Models\Bab;
 use App\Models\SubBab;
 use App\Helpers\TimeHelper;
 use Illuminate\Support\Facades\Auth;
+use File;
+use Illuminate\Auth\Events\Validated;
 
 class SubBabDosenController extends Controller
 {
@@ -48,6 +50,12 @@ class SubBabDosenController extends Controller
     public function store(Request $request, $id_bab){
         try {
             $formData = $request->all();
+            if($request->lampiran_pdf){
+                $fileName = time() . '_bab_' . $id_bab .  '_materi.' . $request->lampiran_pdf->extension();
+                $request->lampiran_pdf->move(public_path('assets/materi'), $fileName);
+                $path = 'assets/materi/' . $fileName;
+                $formData['lampiran_pdf'] = $path;
+            }
             $formData['id_bab'] = $id_bab;
             $formData['id_dosen'] = Auth::id();
             SubBab::create($formData);
@@ -72,6 +80,13 @@ class SubBabDosenController extends Controller
         try {
             $bab = SubBab::findOrFail($id);
             $formData = $request->all();
+            if($request->lampiran_pdf){
+                File::delete($bab->lampiran_pdf);
+                $fileName = time() . '_bab_' . $id_bab .  '_materi.' . $request->lampiran_pdf->extension();
+                $request->lampiran_pdf->move(public_path('assets/materi'), $fileName);
+                $path = 'assets/materi/' . $fileName;
+                $formData['lampiran_pdf'] = $path;
+            }
             $bab->update($formData);
             alert()->success('Hore!','Data berhasil diubah');
             return redirect()->route('dosen.sub_bab.index',['id_bab' => $id_bab]);

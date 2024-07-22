@@ -29,7 +29,7 @@
 
                         <!-- Custom Styled Validation -->
                         <form action="{{ route('dosen.sub_bab.store', ['id_bab' => $bab->id]) }}" method="POST"
-                            class="row g-3 needs-validation" novalidate>
+                            enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
                             @csrf
                             <div class="col-md-12">
                                 <label for="index" class="form-label">Index</label>
@@ -137,7 +137,13 @@
                             </div>
 
 
-
+                            <hr>
+                            <div class="col-md-12">
+                                <label for="lampiran_pdf" class="form-label">Lampiran konten pdf
+                                    <small class="text-success">*opsional</small></label>
+                                <input type="file" name="lampiran_pdf" id="lampiran_pdf" accept="application/pdf"
+                                    class="form-control" />
+                            </div>
 
                             <div class="col-12">
                                 <button class="btn btn-primary" type="submit">Simpan</button>

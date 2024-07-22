@@ -151,6 +151,19 @@
                         </div>
                     </div>
                 @endif
+                @if ($data->lampiran_pdf)
+                    <div class="card">
+                        <div class="card-body mt-3">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <strong>Lampiran Materi</strong>
+                            </div>
+                            <div class="embed-responsive embed-responsive-16by9 my-2">
+                                <embed src="{{ asset($data->lampiran_pdf) }}" type="application/pdf" width="100%"
+                                    height="600px">
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
             <div class="col-lg-4">
                 <div class="row">
@@ -175,7 +188,8 @@
 
                                     <form class="needs-validation"
                                         action="{{ route('mahasiswa.sub_bab.pengumpulanTugas', ['id_bab' => $bab->id, 'id' => $data->id]) }}"
-                                        method="POST" id="pengumpulanTugasForm" enctype="multipart/form-data" novalidate>
+                                        method="POST" id="pengumpulanTugasForm" enctype="multipart/form-data"
+                                        novalidate>
                                         @csrf
                                         @method('PATCH')
                                         <input class="form-control mt-2" name="file_tugas" type="file" id="formFile"

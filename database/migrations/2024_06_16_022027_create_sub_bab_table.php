@@ -30,6 +30,7 @@ return new class extends Migration
             $table->float('bintang_3');
             $table->float('min_akses_materi');
             $table->float('min_akses_yt')->nullable();
+            $table->longText('lampiran_pdf')->nullable();
             $table->timestamps();
         });
     }
